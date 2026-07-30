@@ -26,7 +26,7 @@ export function Performance() {
         which the parallax transform would overwrite.
       */}
       <Parallax
-        distance={70}
+        distance={26}
         className="pointer-events-none absolute -right-[30%] top-1/2 -mt-[26rem] hidden h-[52rem] w-[52rem] text-bone opacity-50 lg:block"
       >
         <Orbit />

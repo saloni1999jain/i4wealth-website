@@ -136,10 +136,25 @@ Deploys to Vercel with no configuration. Set `NEXT_PUBLIC_SITE_URL` (see
 `.env.example`) so canonical URLs, the sitemap and social cards resolve against
 the real domain.
 
-## Content disclaimer
+## Content
 
-The particulars in `content/site.ts` — holding periods, founding year, contact
-details, the ₹25 lakh minimum — are placeholders written to be plausible.
-Replace them with the firm's real details before launch. The compounding
-projection is explicitly labelled illustrative and makes no forecast, and the
-site deliberately publishes no historical returns.
+Firm particulars live in `content/site.ts`. Confirmed and in place:
+
+- Practising since **2000**
+- Median holding period **10 years**
+- Email **i4wealth@gmail.com**
+- Mandate minimum **₹5 lakh a year**
+
+Still outstanding. Fabricating any of these would be worse than leaving them
+empty, so they are empty:
+
+- **`site.phone` is deliberately blank.** The contact row and the `telephone`
+  field in the structured data both skip it while empty, so nothing false is
+  published. Set it and both reappear with no other change.
+- **`site.socials`** point at the bare linkedin.com / x.com / substack.com
+  homepages. Replace them with the firm's real profiles, or delete the entries.
+- **`site.location`** reads "Mumbai, India", which is also hard-coded in the
+  JSON-LD `address` block in `app/layout.tsx`.
+
+The compounding projection is explicitly labelled illustrative and makes no
+forecast, and the site publishes no historical returns.

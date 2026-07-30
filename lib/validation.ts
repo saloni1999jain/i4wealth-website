@@ -39,10 +39,17 @@ export const enquirySchema = z.object({
 
 export type Enquiry = z.infer<typeof enquirySchema>;
 
+/**
+ * Indicative annual commitment bands offered in the enquiry form.
+ *
+ * The lowest band starts at the mandate minimum of ₹5 lakh a year — a first
+ * option above it would turn away enquiries the firm actually accepts.
+ */
 export const INVESTMENT_RANGES = [
+  '₹5L – ₹10L',
+  '₹10L – ₹25L',
   '₹25L – ₹50L',
   '₹50L – ₹1 Cr',
-  '₹1 Cr – ₹5 Cr',
-  '₹5 Cr +',
+  '₹1 Cr +',
   'Still deciding',
 ] as const;

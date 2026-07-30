@@ -1,6 +1,6 @@
 'use client';
 
-import { Mail, MapPin, Phone, type LucideIcon } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 
 import { Section } from '@/components/layout/section';
 import { Reveal } from '@/components/motion/reveal';
@@ -9,27 +9,9 @@ import { ContactForm } from '@/components/sections/contact-form';
 import { AmbientGradient } from '@/components/visuals/ambient';
 import { contact, site } from '@/content/site';
 
-type ContactDetail = {
-  icon: LucideIcon;
-  label: string;
-  href: string | null;
-};
-
-/*
- * `site` is declared `as const`, so an empty `site.phone` has the literal type
- * `''` and TypeScript narrows the truthy branch below to `never`. Widening it
- * to `string` here keeps the guard meaningful.
- */
-const phone: string = site.phone;
-
-/**
- * Contact rows. An entry with no value is omitted rather than rendered empty,
- * so an unconfirmed phone number simply does not appear — filling in
- * `site.phone` brings the row back with no other change.
- */
-const DETAILS: ContactDetail[] = [
+/** Email is the firm's only contact channel; location is context, not a link. */
+const DETAILS: { icon: typeof Mail; label: string; href: string | null }[] = [
   { icon: Mail, label: site.email, href: `mailto:${site.email}` },
-  ...(phone ? [{ icon: Phone, label: phone, href: `tel:${phone.replace(/\s/g, '')}` }] : []),
   { icon: MapPin, label: site.location, href: null },
 ];
 

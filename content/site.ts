@@ -13,12 +13,6 @@ export const site = {
   /** Drives canonical links, the sitemap and social cards. Set per deployment. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://i4wealth.in',
   email: 'i4wealth@gmail.com',
-  /**
-   * Left blank until a real number is confirmed. The contact list and the
-   * structured data both skip it while empty rather than print a placeholder,
-   * so filling this in is all that's needed to bring it back.
-   */
-  phone: '',
   location: 'Mumbai, India',
   founded: 2000,
   /** Minimum annual commitment for the discretionary mandate, in rupees. */

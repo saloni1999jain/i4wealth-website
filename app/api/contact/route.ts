@@ -71,8 +71,8 @@ export async function POST(request: Request) {
    * below and the rest of the pipeline — validation, rate limiting, spam
    * filtering, client states — already works.
    */
-  const { name, email, phone, amount } = parsed.data;
-  console.warn('[contact] enquiry received', { name, email, phone, amount });
+  const { name, email, amount } = parsed.data;
+  console.warn('[contact] enquiry received', { name, email, amount });
 
   return NextResponse.json({ ok: true });
 }

@@ -33,7 +33,7 @@ export function ContactForm() {
   } = useForm<Enquiry>({
     resolver: zodResolver(enquirySchema),
     mode: 'onTouched',
-    defaultValues: { name: '', email: '', phone: '', amount: '', message: '', company: '' },
+    defaultValues: { name: '', email: '', amount: '', message: '', company: '' },
   });
 
   async function onSubmit(values: Enquiry) {
@@ -80,8 +80,8 @@ export function ContactForm() {
               Thank you — your note has reached us.
             </h3>
             <p className="mt-4 max-w-measure-lg text-[1rem] leading-[1.75] text-muted">
-              A partner will read it personally and reply within two working days. If it is urgent, call us and
-              we will make time sooner.
+              A partner will read it personally and reply within two working days. If it is urgent, say so in
+              your note and we will make time sooner.
             </p>
             <button
               type="button"
@@ -108,6 +108,8 @@ export function ContactForm() {
               <input id="company" type="text" tabIndex={-1} autoComplete="off" {...register('company')} />
             </div>
 
+            {/* Name and email pair off; the range select then runs full width
+                rather than sitting half-empty beside a gap. */}
             <div className="grid gap-8 sm:grid-cols-2">
               <TextField
                 label="Full name"
@@ -116,17 +118,6 @@ export function ContactForm() {
                 {...register('name')}
               />
               <TextField
-                label="Phone"
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                error={errors.phone?.message}
-                {...register('phone')}
-              />
-            </div>
-
-            <div className="grid gap-8 sm:grid-cols-2">
-              <TextField
                 label="Email"
                 type="email"
                 inputMode="email"
@@ -134,13 +125,14 @@ export function ContactForm() {
                 error={errors.email?.message}
                 {...register('email')}
               />
-              <SelectField
-                label="Annual investment"
-                options={INVESTMENT_RANGES}
-                error={errors.amount?.message}
-                {...register('amount')}
-              />
             </div>
+
+            <SelectField
+              label="Annual investment"
+              options={INVESTMENT_RANGES}
+              error={errors.amount?.message}
+              {...register('amount')}
+            />
 
             <TextAreaField
               label="Anything you would like us to know"

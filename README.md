@@ -148,9 +148,9 @@ Firm particulars live in `content/site.ts`. Confirmed and in place:
 Still outstanding. Fabricating any of these would be worse than leaving them
 empty, so they are empty:
 
-- **`site.phone` is deliberately blank.** The contact row and the `telephone`
-  field in the structured data both skip it while empty, so nothing false is
-  published. Set it and both reappear with no other change.
+- **There is no phone number anywhere by design.** Email is the firm's only
+  contact channel: the enquiry form does not ask for a number, and the
+  structured data carries no `telephone`.
 - **`site.socials`** point at the bare linkedin.com / x.com / substack.com
   homepages. Replace them with the firm's real profiles, or delete the entries.
 - **`site.location`** reads "Mumbai, India", which is also hard-coded in the

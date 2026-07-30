@@ -13,17 +13,6 @@ export const enquirySchema = z.object({
 
   email: z.string().trim().min(1, 'An email address is required.').email('Please enter a valid email address.'),
 
-  phone: z
-    .string()
-    .trim()
-    .min(1, 'A phone number is required.')
-    // Permissive on purpose: accepts +91 prefixes, spaces, hyphens and brackets,
-    // then checks that 8–15 actual digits remain.
-    .refine((value) => {
-      const digits = value.replace(/\D/g, '');
-      return digits.length >= 8 && digits.length <= 15;
-    }, 'Please enter a valid phone number.'),
-
   amount: z.string().min(1, 'Please choose an indicative range.'),
 
   message: z

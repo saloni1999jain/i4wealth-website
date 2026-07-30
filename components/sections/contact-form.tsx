@@ -135,7 +135,7 @@ export function ContactForm() {
                 {...register('email')}
               />
               <SelectField
-                label="Investment amount"
+                label="Annual investment"
                 options={INVESTMENT_RANGES}
                 error={errors.amount?.message}
                 {...register('amount')}

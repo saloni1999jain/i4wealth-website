@@ -12,10 +12,17 @@ export const site = {
     'I4Wealth is a boutique wealth management firm practising long-term equity investing in Indian businesses — built on patience, discipline, research and ownership.',
   /** Drives canonical links, the sitemap and social cards. Set per deployment. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://i4wealth.in',
-  email: 'invest@i4wealth.in',
-  phone: '+91 98200 00000',
+  email: 'i4wealth@gmail.com',
+  /**
+   * Left blank until a real number is confirmed. The contact list and the
+   * structured data both skip it while empty rather than print a placeholder,
+   * so filling this in is all that's needed to bring it back.
+   */
+  phone: '',
   location: 'Mumbai, India',
-  founded: 2016,
+  founded: 2000,
+  /** Minimum annual commitment for the discretionary mandate, in rupees. */
+  minimumAnnual: '₹5 lakh a year',
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
     { label: 'X', href: 'https://x.com/' },
@@ -41,8 +48,8 @@ export const hero = {
   primaryCta: { label: 'Start Your Investment Journey', href: '#contact' },
   secondaryCta: { label: 'Learn Our Philosophy', href: '#philosophy' },
   marks: [
-    { value: 2016, suffix: '', label: 'Practising since' },
-    { value: 7, suffix: '+ yrs', label: 'Median holding period' },
+    { value: 2000, suffix: '', label: 'Practising since' },
+    { value: 10, suffix: ' yrs', label: 'Median holding period' },
     { value: 0, suffix: '', label: 'Trades chased' },
   ],
 } as const;
@@ -239,12 +246,14 @@ export const performance = {
     {
       title: 'Long-term ownership',
       body: 'Low turnover is a consequence of the work, not a target. Holding periods are measured in market cycles rather than quarters.',
-      stat: { value: 7, suffix: '+ yrs', label: 'Median holding period' },
+      stat: { value: 10, suffix: ' yrs', label: 'Median holding period' },
     },
     {
       title: 'Evidence-based investing',
       body: 'Theses are written before capital is committed, with the conditions that would falsify them stated up front and reviewed on schedule.',
-      stat: { value: 10, suffix: ' yrs', label: 'Filings read per idea' },
+      // Rendered without a unit so it does not read as a duplicate of the
+      // holding-period figure sitting next to it in the grid.
+      stat: { value: 10, suffix: '', label: 'Years of filings per idea' },
     },
   ],
   note:
@@ -261,7 +270,7 @@ export const faq = {
     },
     {
       q: 'Who should invest with I4Wealth?',
-      a: 'Investors with a horizon of at least seven years who are comfortable with equity volatility along the way, and who want to understand what they own. If you need the capital within three years, or you want quarterly outperformance, we are a poor fit — and we would rather say so at the first meeting.',
+      a: 'Investors with a horizon of at least ten years who are comfortable with equity volatility along the way, and who want to understand what they own. If you need the capital within three years, or you want quarterly outperformance, we are a poor fit — and we would rather say so at the first meeting.',
     },
     {
       q: 'Do you trade?',
@@ -273,7 +282,7 @@ export const faq = {
     },
     {
       q: 'What is the minimum investment?',
-      a: 'Our discretionary mandate begins at ₹25 lakh. That threshold exists so that portfolios can be constructed properly and each relationship can be managed personally rather than at scale.',
+      a: 'Our discretionary mandate begins at ₹5 lakh a year. That threshold exists so that portfolios can be constructed properly and each relationship can be managed personally rather than at scale.',
     },
     {
       q: 'How are you compensated?',

@@ -93,7 +93,8 @@ const jsonLd = {
   description: site.description,
   url: site.url,
   email: site.email,
-  telephone: site.phone,
+  // Omitted entirely while unset — an empty `telephone` is worse than none.
+  ...(site.phone ? { telephone: site.phone } : {}),
   foundingDate: String(site.founded),
   areaServed: 'IN',
   address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },

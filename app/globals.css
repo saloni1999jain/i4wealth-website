@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    --bg: 248 248 245;
+    --surface: 255 255 255;
+    --surface-raised: 255 255 255;
+    --ink: 7 27 53;
+    --ink-soft: 39 58 84;
+    --muted: 106 119 136;
+    --line: 223 223 214;
+    --accent: 168 132 62;
+
+    /* Ambient light used by the mesh gradients and cursor halo. */
+    --halo: 200 164 90;
+    --halo-strength: 0.1;
+    --grid: 7 27 53;
+    --grid-strength: 0.05;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --bg: 4 14 28;
+    --surface: 8 24 45;
+    --surface-raised: 11 31 56;
+    --ink: 235 240 247;
+    --ink-soft: 203 214 228;
+    --muted: 137 152 172;
+    --line: 27 45 70;
+    --accent: 209 176 108;
+
+    --halo: 200 164 90;
+    --halo-strength: 0.16;
+    --grid: 226 236 250;
+    --grid-strength: 0.045;
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    /* The scroll container must not be `static`, or scroll-linked sections
+       cannot be measured against it reliably. A no-op for layout: fixed
+       descendants still resolve against the viewport. */
+    position: relative;
+  }
+
+  /*
+   * Lenis drives scrolling on capable devices. When it is inactive (reduced
+   * motion, touch fallback, JS not yet hydrated) native smooth scroll keeps
+   * anchor links from jumping.
+   */
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-feature-settings: 'ss01' on, 'cv11' on;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: rgb(200 164 90 / 0.28);
+    color: rgb(var(--ink));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Headings default to the tight, low-contrast optical rhythm of the brand. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-balance font-medium;
+  }
+
+  /* Custom cursor replaces the native one only where it is actually rendered. */
+  .has-custom-cursor,
+  .has-custom-cursor a,
+  .has-custom-cursor button,
+  .has-custom-cursor [role='button'] {
+    cursor: none;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-eyebrow font-semibold uppercase text-muted;
+  }
+
+  /* Hairline that reads as a drawn rule rather than a border. */
+  .hairline {
+    @apply h-px w-full origin-left bg-gradient-to-r from-line via-line to-transparent;
+  }
+
+  .surface-card {
+    @apply relative overflow-hidden rounded-2xl border border-line bg-surface;
+  }
+
+  /* Faint architectural grid used behind several sections. */
+  .grid-field {
+    background-image:
+      linear-gradient(to right, rgb(var(--grid) / var(--grid-strength)) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--grid) / var(--grid-strength)) 1px, transparent 1px);
+    background-size: 88px 88px;
+  }
+
+  .mask-fade-y {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-br from-gold-soft via-gold to-gold-deep bg-clip-text text-transparent;
+  }
+
+  /* Film grain — a single tiled SVG, no image request. */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.36'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/*
+ * Respect the OS-level motion preference everywhere, including libraries that
+ * animate through inline styles.
+ *
+ * This is deliberately handled in CSS rather than by branching on
+ * `useReducedMotion()` in JSX. Framer resolves that hook on the first client
+ * render but not during SSR, so a render-time branch changes the markup
+ * mid-hydration. CSS applies to identical markup and cannot desynchronise.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Scroll reveals are serialised as inline `opacity: 0`. Without this they
+     would still depend on an animation that should no longer run. */
+  [style*='opacity:0'],
+  [style*='opacity: 0'] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* Mask reveals travel on transform alone, so they must be named explicitly. */
+  .reveal-mask {
+    transform: none !important;
+  }
+}
+

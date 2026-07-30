@@ -8,11 +8,16 @@ import { cn } from '@/lib/utils';
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'none';
 
+/*
+ * Short travel on purpose. These distances were larger and were cut: the more
+ * ground an element covers on entry, the more the page appears to lag behind
+ * the scroll. Fourteen pixels still reads as arrival without drawing the eye.
+ */
 const offset: Record<Direction, { x?: number; y?: number }> = {
-  up: { y: 30 },
-  down: { y: -30 },
-  left: { x: 40 },
-  right: { x: -40 },
+  up: { y: 14 },
+  down: { y: -14 },
+  left: { x: 18 },
+  right: { x: -18 },
   none: {},
 };
 

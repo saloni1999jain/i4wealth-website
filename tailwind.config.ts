@@ -94,10 +94,6 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)', opacity: '1' },
           to: { height: '0', opacity: '0' },
         },
-        drift: {
-          '0%, 100%': { transform: 'translate3d(0,0,0) scale(1)' },
-          '50%': { transform: 'translate3d(2%, -3%, 0) scale(1.06)' },
-        },
         'pulse-ring': {
           '0%, 100%': { transform: 'scale(0.85)', opacity: '0.35' },
           '50%': { transform: 'scale(1.55)', opacity: '0.08' },
@@ -106,7 +102,6 @@ const config: Config = {
       animation: {
         'accordion-down': 'accordion-down 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
         'accordion-up': 'accordion-up 0.32s cubic-bezier(0.7, 0, 0.84, 0)',
-        drift: 'drift 22s ease-in-out infinite',
         'pulse-ring': 'pulse-ring 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
       },
     },

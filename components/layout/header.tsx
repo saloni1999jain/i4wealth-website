@@ -15,19 +15,24 @@ import { cn } from '@/lib/utils';
  * Sticky header.
  *
  * Transparent over the hero, then condenses into a frosted bar once scrolled.
- * It also hides on downward scroll past the fold and returns on upward scroll,
- * so the reading area stays clear without ever stranding navigation.
+ *
+ * It used to also hide on downward scroll and return on upward scroll. That was
+ * removed: a bar that moves in response to scroll direction competes with the
+ * page for attention and reads as jitter on trackpads, where direction flips
+ * constantly. It now only changes density, once, at a single threshold.
  */
 export function Header() {
   const { scrollY } = useScroll();
   const [condensed, setCondensed] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Only flips state when crossing the threshold, so scrolling does not queue a
+  // React render on every frame.
   useMotionValueEvent(scrollY, 'change', (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    setCondensed(latest > 24);
-    setHidden(latest > 520 && latest > previous && !menuOpen);
+    setCondensed((current) => {
+      const next = latest > 24;
+      return next === current ? current : next;
+    });
   });
 
   // The mobile sheet owns the viewport while open.
@@ -52,14 +57,14 @@ export function Header() {
       <motion.header
         className="fixed inset-x-0 top-0 z-50"
         initial={{ y: -80, opacity: 0 }}
-        animate={{ y: hidden ? -110 : 0, opacity: 1 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: EASE }}
       >
         <div
           className={cn(
             'transition-[background-color,backdrop-filter,border-color,padding] duration-500 ease-premium',
             condensed
-              ? 'border-b border-line bg-bg/72 py-3 backdrop-blur-xl backdrop-saturate-150'
+              ? 'border-b border-line bg-bg/90 py-3 backdrop-blur-sm'
               : 'border-b border-transparent py-6',
           )}
         >

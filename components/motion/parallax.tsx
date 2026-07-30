@@ -25,7 +25,7 @@ type ParallaxProps = {
  * Uses a spring on the progress value so the movement lags the scroll slightly
  * — the difference between "parallax" and "jitter".
  */
-export function Parallax({ children, className, distance = 80, scaleTo, fade = false }: ParallaxProps) {
+export function Parallax({ children, className, distance = 30, scaleTo, fade = false }: ParallaxProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -33,7 +33,8 @@ export function Parallax({ children, className, distance = 80, scaleTo, fade = f
     offset: ['start end', 'end start'],
   });
 
-  const eased = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
+  // Stiff enough to stay with the page; a soft spring here reads as drag.
+  const eased = useSpring(scrollYProgress, { stiffness: 320, damping: 40, mass: 0.3 });
 
   const y = useTransform(eased, [0, 1], [distance, -distance]);
   const scale = useTransform(eased, [0, 0.5, 1], [1, scaleTo ?? 1, 1]);

@@ -75,11 +75,16 @@ export function Constellation({ className }: { className?: string }) {
     // Cursor tracked in normalised space; `active` fades the influence in and out.
     const pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5, active: 0, targetActive: 0 };
 
+    /*
+     * Link drawing is O(n²), and each surviving pair costs a separate stroke.
+     * These counts were higher and were cut back — past roughly fifty nodes the
+     * field looks no denser but the frame budget disappears.
+     */
     const count = () => {
       const area = window.innerWidth;
-      if (area < 640) return 34;
-      if (area < 1024) return 54;
-      return 76;
+      if (area < 640) return 26;
+      if (area < 1024) return 38;
+      return 52;
     };
 
     function seed() {
@@ -111,8 +116,13 @@ export function Constellation({ className }: { className?: string }) {
 
     function resize() {
       const rect = canvas!.getBoundingClientRect();
-      // Cap DPR at 2 — beyond that the cost is real and the gain is not.
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /*
+       * Capped at 1.5 rather than 2. This canvas covers the whole viewport, so
+       * every extra device pixel is cleared and repainted 60 times a second;
+       * on a soft-edged field of dots the difference is invisible and the cost
+       * is not.
+       */
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
       width = rect.width;
       height = rect.height;
@@ -199,14 +209,16 @@ export function Constellation({ className }: { className?: string }) {
         ctx.fillStyle = `rgba(${ink}, ${alpha.toFixed(3)})`;
         ctx.fill();
 
-        // A soft halo only where the cursor is, to keep the fill rate low.
+        /*
+         * A flat translucent disc stands in for the halo. Building a radial
+         * gradient object per node per frame was the single most expensive
+         * thing in this loop, and at this size and opacity the two are
+         * indistinguishable.
+         */
         if (node.glow > 0.15) {
-          const halo = ctx.createRadialGradient(x, y, 0, x, y, radius * 7);
-          halo.addColorStop(0, `rgba(${ink}, ${(node.glow * 0.22 * intensity).toFixed(3)})`);
-          halo.addColorStop(1, `rgba(${ink}, 0)`);
-          ctx.fillStyle = halo;
           ctx.beginPath();
-          ctx.arc(x, y, radius * 7, 0, Math.PI * 2);
+          ctx.arc(x, y, radius * 5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${ink}, ${(node.glow * 0.07 * intensity).toFixed(3)})`;
           ctx.fill();
         }
       }

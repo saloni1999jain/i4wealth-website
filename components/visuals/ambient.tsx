@@ -68,24 +68,18 @@ export function AmbientGradient({ className }: { className?: string }) {
 }
 
 /**
- * A slow-breathing blurred orb. Used one or two at a time, far apart, to keep
- * large empty areas from reading as unfinished.
+ * A large blurred orb, used one or two at a time to keep empty areas from
+ * reading as unfinished.
+ *
+ * Static by design. These used to drift on a loop, but a continuously animated
+ * 26rem blur is one of the most expensive things a page can ask for, and it was
+ * competing with scrolling for the same frames.
  */
-export function FloatingOrb({
-  className,
-  delay = 0,
-}: {
-  className?: string;
-  delay?: number;
-}) {
+export function FloatingOrb({ className }: { className?: string }) {
   return (
     <div
       aria-hidden
-      className={cn(
-        'pointer-events-none absolute rounded-full bg-gold/[0.16] blur-[90px] animate-drift motion-reduce:animate-none',
-        className,
-      )}
-      style={{ animationDelay: `${delay}s` }}
+      className={cn('pointer-events-none absolute rounded-full bg-gold/[0.16] blur-[90px]', className)}
     />
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
 import { Section, SectionHeader } from '@/components/layout/section';
@@ -22,8 +22,9 @@ export function Philosophy() {
     target: trackRef,
     offset: ['start 65%', 'end 70%'],
   });
-  const fill = useSpring(scrollYProgress, { stiffness: 90, damping: 26, restDelta: 0.001 });
-  const fillHeight = useTransform(fill, (value) => `${value * 100}%`);
+  // Tracks scroll directly. A spring here trailed the cursor's position on the
+  // page by a visible fraction of a second, which read as lag rather than ease.
+  const fillHeight = useTransform(scrollYProgress, (value) => `${value * 100}%`);
 
   return (
     <Section id="philosophy">
@@ -68,10 +69,10 @@ function PhilosophyStep({ step, index }: { step: Step; index: number }) {
     <motion.li
       ref={ref}
       className="group relative"
-      initial={{ opacity: 0, y: 34 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
-      transition={{ duration: 0.85, ease: EASE }}
+      viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+      transition={{ duration: 0.5, ease: EASE }}
     >
       {/* Node on the spine. Fills once the step is the one being read. */}
       <span

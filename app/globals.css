@@ -53,11 +53,11 @@
   }
 
   /*
-   * Lenis drives scrolling on capable devices. When it is inactive (reduced
-   * motion, touch fallback, JS not yet hydrated) native smooth scroll keeps
-   * anchor links from jumping.
+   * Native smooth scrolling only. A scroll-hijacking library was tried here and
+   * removed: it decouples the page from wheel and trackpad input, which reads
+   * as lag no matter how the easing is tuned.
    */
-  html:not(.lenis) {
+  html {
     scroll-behavior: smooth;
   }
 
@@ -132,14 +132,19 @@
     @apply bg-gradient-to-br from-gold-soft via-gold to-gold-deep bg-clip-text text-transparent;
   }
 
-  /* Film grain — a single tiled SVG, no image request. */
+  /*
+   * Film grain — a single tiled SVG, no image request.
+   *
+   * Rendered as a plain translucent overlay. `mix-blend-mode: soft-light` looked
+   * marginally richer but forces the compositor to re-blend the layer beneath it
+   * while scrolling, which is not worth it on full-height sections.
+   */
   .grain::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.4;
-    mix-blend-mode: soft-light;
+    opacity: 0.25;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.36'/%3E%3C/svg%3E");
   }
 }
@@ -156,20 +161,6 @@
   .tabular {
     font-variant-numeric: tabular-nums;
   }
-}
-
-/* Lenis */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
 }
 
 /*

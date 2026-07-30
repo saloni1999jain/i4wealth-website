@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -17,27 +17,16 @@ import { DURATION, EASE } from '@/lib/motion';
  * The hero.
  *
  * Layered back to front: ambient mesh gradient → architectural grid →
- * constellation canvas → vignette → content. The whole content column drifts
- * upward and fades as the page scrolls, so the section hands off rather than
- * scrolling away.
+ * constellation canvas → vignette → content.
+ *
+ * The content column deliberately does *not* move with scroll. An earlier
+ * version drifted it upward and faded it out; text travelling at a different
+ * rate from the page is the thing that makes scrolling feel unanchored, so it
+ * now scrolls at exactly the speed of everything else.
  */
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { ready } = useLoading();
-  const reduced = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-
-  /*
-   * Reduced motion neutralises the *ranges* rather than dropping `style`
-   * entirely. Framer resolves `useReducedMotion()` on the very first client
-   * render but not during SSR, so branching on it in JSX would swap the
-   * rendered markup mid-hydration. At scroll position 0 every range below is
-   * the identity transform either way, so the server and client agree.
-   */
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '22%']);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduced ? 1 : 0]);
-  const canvasScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.12]);
 
   // Nothing in the hero animates until the intro curtain has lifted.
   const show = ready;
@@ -54,16 +43,12 @@ export function Hero() {
 
       <div aria-hidden className="grid-field absolute inset-0 opacity-70 mask-fade-y" />
 
-      <motion.div
-        aria-hidden
-        className="absolute inset-0"
-        style={{ scale: canvasScale }}
-      >
+      <div aria-hidden className="absolute inset-0">
         <Constellation className="h-full w-full" />
-      </motion.div>
+      </div>
 
       <FloatingOrb className="left-[-10%] top-[12%] h-[26rem] w-[26rem]" />
-      <FloatingOrb className="bottom-[-8%] right-[-6%] h-[30rem] w-[30rem]" delay={-9} />
+      <FloatingOrb className="bottom-[-8%] right-[-6%] h-[30rem] w-[30rem]" />
 
       {/* Vignette: keeps the typography legible over the brightest part of the field. */}
       <div
@@ -72,10 +57,7 @@ export function Hero() {
       />
 
       {/* — Content — */}
-      <motion.div
-        className="container relative z-10 flex min-h-[calc(100svh-10rem)] flex-col justify-between pb-10"
-        style={{ y: contentY, opacity: contentOpacity }}
-      >
+      <div className="container relative z-10 flex min-h-[calc(100svh-10rem)] flex-col justify-between pb-10">
         <div className="max-w-5xl">
           <motion.div {...enter(0.1)} className="mb-9 flex items-center gap-3">
             <span aria-hidden className="relative flex h-1.5 w-1.5">
@@ -135,7 +117,7 @@ export function Hero() {
             </div>
           ))}
         </motion.dl>
-      </motion.div>
+      </div>
 
       <ScrollCue show={show} />
     </section>

@@ -5,7 +5,6 @@ import { Cursor } from '@/components/experience/cursor';
 import { LoadingProvider } from '@/components/experience/loading-provider';
 import { Preloader } from '@/components/experience/preloader';
 import { ScrollProgress } from '@/components/experience/scroll-progress';
-import { SmoothScroll } from '@/components/experience/smooth-scroll';
 import { ThemeProvider } from '@/components/experience/theme-provider';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
@@ -140,7 +139,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </a>
 
             <Preloader />
-            <SmoothScroll />
             <ScrollProgress />
             <Cursor />
 

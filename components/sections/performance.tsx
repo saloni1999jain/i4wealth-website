@@ -33,7 +33,7 @@ export function Performance() {
       </Parallax>
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-32 top-10 h-[28rem] w-[28rem] rounded-full bg-gold/10 blur-[100px]"
+        className="pointer-events-none absolute -left-32 top-10 h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-[100px]"
       />
       <div aria-hidden className="grain absolute inset-0 opacity-25" />
 
@@ -41,7 +41,7 @@ export function Performance() {
         <div className="max-w-3xl">
           <Reveal>
             <div className="mb-6 flex items-center gap-4">
-              <span className="h-px w-10 bg-gold" />
+              <span className="h-px w-10 bg-accent" />
               <span className="text-eyebrow font-semibold uppercase text-bone/50">{performance.eyebrow}</span>
             </div>
           </Reveal>
@@ -66,7 +66,7 @@ export function Performance() {
                     value={pillar.stat.value}
                     suffix={pillar.stat.suffix}
                     format={(v) => Math.round(v).toString()}
-                    className="text-[clamp(2.5rem,4.5vw,3.75rem)] font-extralight leading-none tracking-[-0.04em] text-gold"
+                    className="text-[clamp(2.5rem,4.5vw,3.75rem)] font-extralight leading-none tracking-[-0.04em] text-accent"
                   />
                   <span className="text-[0.75rem] uppercase tracking-[0.16em] text-bone/40">
                     {pillar.stat.label}
@@ -85,7 +85,7 @@ export function Performance() {
         </RevealGroup>
 
         <Reveal delay={0.1}>
-          <p className="mt-20 max-w-measure-lg border-l border-gold/40 pl-6 text-[0.9375rem] leading-[1.75] text-bone/50">
+          <p className="mt-20 max-w-measure-lg border-l border-accent/40 pl-6 text-[0.9375rem] leading-[1.75] text-bone/50">
             {performance.note}
           </p>
         </Reveal>

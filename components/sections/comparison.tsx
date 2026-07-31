@@ -84,7 +84,7 @@ function Panel({
     <motion.div
       className={cn(
         'group relative min-w-0 overflow-hidden rounded-2xl border p-8 sm:p-10 lg:basis-0 lg:p-12',
-        isRight ? 'border-gold/25 bg-navy text-bone' : 'border-line bg-surface',
+        isRight ? 'border-accent/25 bg-navy text-bone' : 'border-line bg-surface',
       )}
       animate={{ opacity: dimmed ? 0.55 : 1, flexGrow: flex }}
       transition={{ duration: 0.6, ease: EASE }}
@@ -95,7 +95,7 @@ function Panel({
         <>
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold/20 blur-[80px]"
+            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/20 blur-[80px]"
           />
           <div aria-hidden className="grain absolute inset-0 opacity-30" />
         </>
@@ -114,7 +114,7 @@ function Panel({
           <span
             className={cn(
               'text-[0.6875rem] uppercase tracking-[0.2em]',
-              isRight ? 'text-gold' : 'text-muted/70',
+              isRight ? 'text-accent' : 'text-muted/70',
             )}
           >
             {isRight ? 'Us' : 'Not us'}
@@ -139,7 +139,7 @@ function Panel({
                     aria-hidden
                     className={cn(
                       'h-1 w-1 shrink-0 rounded-full transition-all duration-500 ease-premium',
-                      isRight ? 'bg-gold group-hover:w-5' : 'bg-muted/40',
+                      isRight ? 'bg-accent group-hover:w-5' : 'bg-muted/40',
                     )}
                   />
                   <span

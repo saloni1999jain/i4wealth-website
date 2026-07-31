@@ -32,7 +32,7 @@ export function Contact() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
               <div className="mb-6 flex items-center gap-4">
-                <span className="h-px w-10 bg-gold" />
+                <span className="h-px w-10 bg-accent" />
                 <span className="eyebrow">{contact.eyebrow}</span>
               </div>
             </Reveal>
@@ -55,7 +55,7 @@ export function Contact() {
                 {DETAILS.map(({ icon: Icon, label, href }) => {
                   const content = (
                     <>
-                      <Icon className="h-4 w-4 shrink-0 text-gold" strokeWidth={1.5} />
+                      <Icon className="h-4 w-4 shrink-0 text-accent" strokeWidth={1.5} />
                       <span>{label}</span>
                     </>
                   );
@@ -65,7 +65,7 @@ export function Contact() {
                       {href ? (
                         <a
                           href={href}
-                          className="group inline-flex items-center gap-4 text-[1.0625rem] text-ink transition-colors duration-300 hover:text-gold"
+                          className="group inline-flex items-center gap-4 text-[1.0625rem] text-ink transition-colors duration-300 hover:text-accent"
                         >
                           {content}
                         </a>
@@ -84,7 +84,7 @@ export function Contact() {
               <ul className="mt-12 space-y-3 border-t border-line pt-8">
                 {contact.assurances.map((item) => (
                   <li key={item} className="flex items-center gap-3 text-[0.875rem] text-muted">
-                    <span aria-hidden className="h-px w-4 bg-gold/60" />
+                    <span aria-hidden className="h-px w-4 bg-accent/60" />
                     {item}
                   </li>
                 ))}

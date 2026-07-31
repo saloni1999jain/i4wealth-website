@@ -32,7 +32,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Building Wealth. Not Chasing Markets.`,
+    default: `${site.name} — Markets fluctuate. Wealth compounds.`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
@@ -55,12 +55,12 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — Building Wealth. Not Chasing Markets.`,
+    title: `${site.name} — Markets fluctuate. Wealth compounds.`,
     description: site.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} — Building Wealth. Not Chasing Markets.`,
+    title: `${site.name} — Markets fluctuate. Wealth compounds.`,
     description: site.description,
   },
   robots: {
@@ -73,8 +73,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F8F8F5' },
-    { media: '(prefers-color-scheme: dark)', color: '#040E1C' },
+    { media: '(prefers-color-scheme: light)', color: '#F4F7FC' },
+    { media: '(prefers-color-scheme: dark)', color: '#0B0F2A' },
   ],
   width: 'device-width',
   initialScale: 1,
@@ -126,6 +126,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '<style>[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important;filter:none!important}</style>',
           }}
         />
+
+        {/*
+          The sky. Fixed and un-animated, so it composites once and costs
+          nothing while scrolling. Negative z-index puts it above the body's
+          background colour but behind all content.
+        */}
+        <div aria-hidden className="sky-field pointer-events-none fixed inset-0 -z-10" />
 
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LoadingProvider>

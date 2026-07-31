@@ -20,7 +20,7 @@ export function Faq() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
               <div className="mb-6 flex items-center gap-4">
-                <span className="h-px w-10 bg-gold" />
+                <span className="h-px w-10 bg-accent" />
                 <span className="eyebrow">{faq.eyebrow}</span>
               </div>
             </Reveal>
@@ -34,14 +34,14 @@ export function Faq() {
                 Something not covered here?{' '}
                 <a
                   href="#contact"
-                  className="text-ink underline decoration-gold/50 underline-offset-4 transition-colors duration-300 hover:text-gold"
+                  className="text-ink underline decoration-accent/50 underline-offset-4 transition-colors duration-300 hover:text-accent"
                 >
                   Write to us
                 </a>{' '}
                 — or email{' '}
                 <a
                   href={`mailto:${site.email}`}
-                  className="text-ink underline decoration-gold/50 underline-offset-4 transition-colors duration-300 hover:text-gold"
+                  className="text-ink underline decoration-accent/50 underline-offset-4 transition-colors duration-300 hover:text-accent"
                 >
                   {site.email}
                 </a>
@@ -56,7 +56,7 @@ export function Faq() {
                 <AccordionItem key={item.q} value={`item-${index}`}>
                   <AccordionTrigger>
                     <span className="flex gap-5">
-                      <span className="tabular mt-1.5 text-[0.6875rem] tracking-[0.2em] text-gold">
+                      <span className="tabular mt-1.5 text-[0.6875rem] tracking-[0.2em] text-accent">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <span className="font-light">{item.q}</span>

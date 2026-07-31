@@ -22,7 +22,7 @@ export function Footer() {
       <div aria-hidden className="grain absolute inset-0 opacity-20" />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[110px]"
+        className="pointer-events-none absolute -bottom-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-accent/10 blur-[110px]"
       />
 
       <div className="container relative pb-12 pt-section-sm">
@@ -55,7 +55,7 @@ export function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex rounded-full border border-bone/15 px-4 py-2 text-[0.75rem] tracking-[0.06em] text-bone/70 transition-colors duration-500 ease-premium hover:border-gold/50 hover:text-gold"
+                      className="inline-flex rounded-full border border-bone/15 px-4 py-2 text-[0.75rem] tracking-[0.06em] text-bone/70 transition-colors duration-500 ease-premium hover:border-accent/50 hover:text-accent"
                     >
                       {social.label}
                     </a>
@@ -74,11 +74,11 @@ export function Footer() {
                     <li key={link.href}>
                       <a
                         href={link.href}
-                        className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone/70 transition-colors duration-300 hover:text-gold"
+                        className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone/70 transition-colors duration-300 hover:text-accent"
                       >
                         <span
                           aria-hidden
-                          className="h-px w-0 bg-gold transition-all duration-500 ease-premium group-hover:w-4"
+                          className="h-px w-0 bg-accent transition-all duration-500 ease-premium group-hover:w-4"
                         />
                         {link.label}
                       </a>
@@ -101,10 +101,10 @@ export function Footer() {
 
           <a
             href="#top"
-            className="group inline-flex items-center gap-3 text-[0.75rem] uppercase tracking-[0.16em] text-bone/50 transition-colors duration-300 hover:text-gold"
+            className="group inline-flex items-center gap-3 text-[0.75rem] uppercase tracking-[0.16em] text-bone/50 transition-colors duration-300 hover:text-accent"
           >
             Back to top
-            <span className="grid h-9 w-9 place-items-center rounded-full border border-bone/15 transition-all duration-500 ease-premium group-hover:border-gold/50 group-hover:-translate-y-0.5">
+            <span className="grid h-9 w-9 place-items-center rounded-full border border-bone/15 transition-all duration-500 ease-premium group-hover:border-accent/50 group-hover:-translate-y-0.5">
               <ArrowUp className="h-3.5 w-3.5" />
             </span>
           </a>

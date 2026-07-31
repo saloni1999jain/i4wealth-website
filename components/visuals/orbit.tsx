@@ -21,13 +21,15 @@ export function Orbit({ className }: { className?: string }) {
     <svg viewBox="-200 -200 400 400" className={cn('h-full w-full', className)} aria-hidden fill="none">
       <defs>
         <radialGradient id="orbit-core">
-          <stop offset="0%" stopColor="#C8A45A" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#C8A45A" stopOpacity="0" />
+          {/* Inline styles rather than presentation attributes: custom
+              properties resolve in `style`, not in `stopColor`. */}
+          <stop offset="0%" style={{ stopColor: 'rgb(var(--accent))', stopOpacity: 0.85 }} />
+          <stop offset="100%" style={{ stopColor: 'rgb(var(--accent))', stopOpacity: 0 }} />
         </radialGradient>
       </defs>
 
       <circle r="34" fill="url(#orbit-core)" />
-      <circle r="4" fill="#C8A45A" />
+      <circle r="4" className="fill-accent" />
 
       {RINGS.map((ring) => (
         <g
@@ -39,7 +41,7 @@ export function Orbit({ className }: { className?: string }) {
           }}
         >
           <circle r={ring.r} stroke="currentColor" strokeWidth="1" strokeOpacity="0.16" />
-          {ring.dot ? <circle cx={ring.r} cy="0" r="3" fill="#C8A45A" fillOpacity="0.8" /> : null}
+          {ring.dot ? <circle cx={ring.r} cy="0" r="3" className="fill-accent/80" /> : null}
         </g>
       ))}
 

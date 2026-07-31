@@ -79,7 +79,7 @@ export function FloatingOrb({ className }: { className?: string }) {
   return (
     <div
       aria-hidden
-      className={cn('pointer-events-none absolute rounded-full bg-gold/[0.16] blur-[90px]', className)}
+      className={cn('pointer-events-none absolute rounded-full bg-accent/[0.16] blur-[90px]', className)}
     />
   );
 }

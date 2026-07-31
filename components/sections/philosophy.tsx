@@ -39,10 +39,10 @@ export function Philosophy() {
           </div>
 
           <div ref={trackRef} className="relative pl-10 sm:pl-14">
-            {/* The spine: a static hairline with a gold fill tracking scroll. */}
+            {/* The spine: a static hairline with an accent fill tracking scroll. */}
             <div aria-hidden className="absolute bottom-2 left-[7px] top-2 w-px bg-line sm:left-[11px]">
               <motion.div
-                className="w-full origin-top bg-gradient-to-b from-gold via-gold to-gold/30"
+                className="w-full origin-top bg-gradient-to-b from-accent via-accent to-accent/30"
                 style={{ height: fillHeight }}
               />
             </div>
@@ -79,19 +79,19 @@ function PhilosophyStep({ step, index }: { step: Step; index: number }) {
         aria-hidden
         className={cn(
           'absolute -left-10 top-1.5 grid h-[15px] w-[15px] place-items-center rounded-full border transition-all duration-700 ease-premium sm:-left-14 sm:h-[23px] sm:w-[23px]',
-          active ? 'border-gold bg-bg' : 'border-line bg-bg',
+          active ? 'border-accent bg-bg' : 'border-line bg-bg',
         )}
       >
         <span
           className={cn(
-            'block rounded-full bg-gold transition-all duration-700 ease-premium',
+            'block rounded-full bg-accent transition-all duration-700 ease-premium',
             active ? 'h-[5px] w-[5px] opacity-100 sm:h-[7px] sm:w-[7px]' : 'h-0 w-0 opacity-0',
           )}
         />
       </span>
 
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="tabular text-[0.6875rem] font-medium tracking-[0.2em] text-gold">
+        <span className="tabular text-[0.6875rem] font-medium tracking-[0.2em] text-accent">
           {String(index + 1).padStart(2, '0')}
         </span>
         <h3 className="text-display-sm font-light tracking-[-0.025em] text-ink">{step.title}</h3>
@@ -106,7 +106,7 @@ function PhilosophyStep({ step, index }: { step: Step; index: number }) {
       {/* Hairline that extends on hover — a small reward for attention. */}
       <span
         aria-hidden
-        className="mt-8 block h-px w-12 origin-left bg-line transition-all duration-700 ease-premium group-hover:w-24 group-hover:bg-gold/60"
+        className="mt-8 block h-px w-12 origin-left bg-line transition-all duration-700 ease-premium group-hover:w-24 group-hover:bg-accent/60"
       />
     </motion.li>
   );

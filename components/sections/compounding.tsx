@@ -107,7 +107,7 @@ export function Compounding() {
             {/* — Chart — */}
             <div className="relative p-6 sm:p-9">
               <div className="mb-6 flex flex-wrap items-center gap-x-7 gap-y-2">
-                <Legend className="bg-gold" label="Portfolio value" />
+                <Legend className="bg-accent" label="Portfolio value" />
                 <Legend className="bg-muted/60" label="Capital invested" dashed />
               </div>
 
@@ -120,12 +120,12 @@ export function Compounding() {
                 >
                   <defs>
                     <linearGradient id={`${gradientId}-area`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#C8A45A" stopOpacity="0.32" />
-                      <stop offset="100%" stopColor="#C8A45A" stopOpacity="0" />
+                      <stop offset="0%" style={{ stopColor: 'rgb(var(--accent))', stopOpacity: 0.32 }} />
+                      <stop offset="100%" style={{ stopColor: 'rgb(var(--accent))', stopOpacity: 0 }} />
                     </linearGradient>
                     <linearGradient id={`${gradientId}-line`} x1="0" y1="1" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#A8843E" />
-                      <stop offset="100%" stopColor="#DEC391" />
+                      <stop offset="0%" style={{ stopColor: 'rgb(var(--accent-deep))' }} />
+                      <stop offset="100%" style={{ stopColor: 'rgb(var(--accent-soft))' }} />
                     </linearGradient>
                   </defs>
 
@@ -176,14 +176,12 @@ export function Compounding() {
                   {/* Terminal marker. The halo pulses via CSS rather than SMIL
                       so `motion-reduce:` can switch it off without a
                       render-time branch that would break hydration. */}
-                  <circle cx={VB.width} cy={0} r={5} fill="#C8A45A" />
+                  <circle cx={VB.width} cy={0} r={5} className="fill-accent" />
                   <circle
                     cx={VB.width}
                     cy={0}
                     r={11}
-                    fill="#C8A45A"
-                    fillOpacity={0.18}
-                    className="animate-pulse-ring motion-reduce:animate-none"
+                    className="fill-accent/20 animate-pulse-ring motion-reduce:animate-none"
                     style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
                   />
                 </svg>
@@ -250,7 +248,7 @@ function Stat({
       <dt className="text-[0.6875rem] uppercase tracking-[0.16em] text-muted">{label}</dt>
       <dd
         className={`mt-2.5 text-[clamp(1.5rem,2.4vw,2rem)] font-light tracking-[-0.03em] ${
-          accent ? 'text-gold' : 'text-ink'
+          accent ? 'text-accent' : 'text-ink'
         } ${emphasis ? 'font-normal' : ''}`}
       >
         <AnimatedNumber value={value} mode="always" format={formatCompactInr} />

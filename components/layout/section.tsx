@@ -45,7 +45,7 @@ export function SectionHeader({ eyebrow, title, lede, className, align = 'left' 
     <header className={cn('relative', align === 'center' && 'mx-auto text-center', className)}>
       <Reveal>
         <div className={cn('mb-6 flex items-center gap-4', align === 'center' && 'justify-center')}>
-          <span className="h-px w-10 bg-gold" />
+          <span className="h-px w-10 bg-accent" />
           <span className="eyebrow">{eyebrow}</span>
         </div>
       </Reveal>

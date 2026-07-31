@@ -74,7 +74,7 @@ export function Header() {
               className="group flex items-center gap-3 rounded-full"
               aria-label={`${site.name} — back to top`}
             >
-              <Monogram className="h-8 w-8 text-ink transition-colors duration-500 group-hover:text-gold" />
+              <Monogram className="h-8 w-8 text-ink transition-colors duration-500 group-hover:text-accent" />
               <span className="text-[0.9375rem] font-semibold tracking-[-0.02em] text-ink">
                 I4<span className="font-light text-muted">Wealth</span>
               </span>
@@ -91,7 +91,7 @@ export function Header() {
                   {/* Hairline that draws in from the centre on hover. */}
                   <span
                     aria-hidden
-                    className="absolute inset-x-4 bottom-1 h-px origin-center scale-x-0 bg-gold transition-transform duration-500 ease-premium group-hover:scale-x-100"
+                    className="absolute inset-x-4 bottom-1 h-px origin-center scale-x-0 bg-accent transition-transform duration-500 ease-premium group-hover:scale-x-100"
                   />
                 </a>
               ))}
@@ -110,7 +110,7 @@ export function Header() {
                 onClick={() => setMenuOpen(true)}
                 aria-label="Open menu"
                 aria-expanded={menuOpen}
-                className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink transition-colors duration-300 hover:border-gold/60 lg:hidden"
+                className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink transition-colors duration-300 hover:border-accent/60 lg:hidden"
               >
                 <span aria-hidden className="flex flex-col gap-[5px]">
                   <span className="block h-px w-4 bg-current" />
@@ -168,7 +168,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: EASE, delay: 0.06 * index + 0.1 }}
               >
-                <span className="mr-4 align-middle text-[0.6875rem] tracking-[0.2em] text-gold">
+                <span className="mr-4 align-middle text-[0.6875rem] tracking-[0.2em] text-accent">
                   0{index + 1}
                 </span>
                 {item.label}

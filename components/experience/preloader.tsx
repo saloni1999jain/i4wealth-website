@@ -99,14 +99,14 @@ export function Preloader() {
 
             <span className="tabular text-[clamp(3rem,10vw,7rem)] font-extralight leading-none tracking-[-0.04em] text-bone">
               {progress}
-              <span className="ml-1 align-super text-[0.28em] text-gold">%</span>
+              <span className="ml-1 align-super text-[0.28em] text-accent">%</span>
             </span>
           </div>
 
-          {/* Loading rule — the same gold hairline used for scroll progress. */}
+          {/* Loading rule — the same accent hairline used for scroll progress. */}
           <div className="absolute inset-x-0 bottom-0 h-px bg-bone/10">
             <motion.div
-              className="h-full origin-left bg-gold"
+              className="h-full origin-left bg-accent"
               style={{ scaleX: progress / 100 }}
             />
           </div>

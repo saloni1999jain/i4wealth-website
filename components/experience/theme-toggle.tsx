@@ -24,7 +24,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={mounted ? `Switch to ${isDark ? 'light' : 'dark'} theme` : 'Switch theme'}
       className={cn(
         'relative grid h-10 w-10 place-items-center rounded-full border border-line',
-        'text-ink transition-colors duration-500 ease-premium hover:border-gold/60 hover:text-gold',
+        'text-ink transition-colors duration-500 ease-premium hover:border-accent/60 hover:text-accent',
         className,
       )}
     >

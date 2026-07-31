@@ -15,7 +15,7 @@ const draw: Transition = { duration: 1.5, ease: [0.22, 1, 0.36, 1] };
 
 /**
  * The I4Wealth mark: a vertical stem (the "I"), an ascending arc (growth, drawn
- * once rather than illustrated), and a single gold point where the two meet.
+ * once rather than illustrated), and a single accent point where they meet.
  *
  * Deliberately geometric — no charts, no arrows, no coins.
  */
@@ -55,7 +55,7 @@ export function Monogram({ className, animate = false, title = 'I4Wealth' }: Mon
         cx="33"
         cy="10"
         r="2.6"
-        fill="#C8A45A"
+        className="fill-accent"
         initial={animate ? { scale: 0, opacity: 0 } : false}
         animate={animate ? { scale: 1, opacity: 1 } : undefined}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 1.1 }}

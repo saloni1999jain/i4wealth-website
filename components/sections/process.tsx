@@ -81,7 +81,7 @@ function DesktopSlat({
       className={cn(
         'group relative min-w-0 basis-0 overflow-hidden rounded-2xl border text-left',
         'transition-colors duration-700 ease-premium',
-        isActive ? 'border-gold/30 bg-navy text-bone' : 'border-line bg-surface hover:border-gold/25',
+        isActive ? 'border-accent/30 bg-navy text-bone' : 'border-line bg-surface hover:border-accent/25',
       )}
       animate={{ flexGrow: isActive ? 4.6 : 1 }}
       transition={{ duration: 0.75, ease: EASE }}
@@ -89,7 +89,7 @@ function DesktopSlat({
       {isActive ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-gold/20 blur-[70px]"
+          className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-[70px]"
         />
       ) : null}
 
@@ -103,13 +103,13 @@ function DesktopSlat({
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
           >
             <div className="flex items-start justify-between gap-6">
-              <span className="tabular text-[0.6875rem] tracking-[0.24em] text-gold">{stage.index}</span>
+              <span className="tabular text-[0.6875rem] tracking-[0.24em] text-accent">{stage.index}</span>
               <span className="h-px flex-1 translate-y-2 bg-bone/15" />
             </div>
 
             <div className="max-w-xl">
               <h3 className="text-display-sm font-light tracking-[-0.025em] text-bone">{stage.title}</h3>
-              <p className="mt-3 text-[1.0625rem] text-gold/90">{stage.summary}</p>
+              <p className="mt-3 text-[1.0625rem] text-accent/90">{stage.summary}</p>
               <p className="mt-6 text-[1.0625rem] leading-[1.75] text-bone/60 text-pretty">{stage.body}</p>
 
               <ul className="mt-8 flex flex-wrap gap-2.5">
@@ -135,13 +135,13 @@ function DesktopSlat({
             <span className="tabular text-[0.6875rem] tracking-[0.2em] text-muted">{stage.index}</span>
 
             {/* Vertical, reading bottom-to-top — keeps slats narrow without truncating. */}
-            <span className="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-[1.0625rem] tracking-[-0.01em] text-ink transition-colors duration-500 group-hover:text-gold">
+            <span className="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-[1.0625rem] tracking-[-0.01em] text-ink transition-colors duration-500 group-hover:text-accent">
               {stage.title}
             </span>
 
             <span
               aria-hidden
-              className="h-1.5 w-1.5 rounded-full bg-line transition-colors duration-500 group-hover:bg-gold"
+              className="h-1.5 w-1.5 rounded-full bg-line transition-colors duration-500 group-hover:bg-accent"
             />
           </motion.div>
         )}
@@ -167,13 +167,13 @@ function MobileStage({
         aria-expanded={isActive}
         className="flex w-full items-center gap-5 py-6 text-left"
       >
-        <span className="tabular text-[0.6875rem] tracking-[0.2em] text-gold">{stage.index}</span>
+        <span className="tabular text-[0.6875rem] tracking-[0.2em] text-accent">{stage.index}</span>
         <span className="flex-1 text-[1.25rem] font-light tracking-[-0.02em] text-ink">{stage.title}</span>
         <span
           aria-hidden
           className={cn(
             'h-2 w-2 rotate-45 border-b border-r border-muted transition-transform duration-500 ease-premium',
-            isActive && '-rotate-[135deg] border-gold',
+            isActive && '-rotate-[135deg] border-accent',
           )}
         />
       </button>
@@ -189,7 +189,7 @@ function MobileStage({
             className="overflow-hidden"
           >
             <div className="pb-8 pl-11 pr-2">
-              <p className="text-[0.9375rem] text-gold">{stage.summary}</p>
+              <p className="text-[0.9375rem] text-accent">{stage.summary}</p>
               <p className="mt-4 text-[1rem] leading-[1.7] text-muted text-pretty">{stage.body}</p>
               <ul className="mt-6 flex flex-wrap gap-2">
                 {stage.detail.map((item) => (

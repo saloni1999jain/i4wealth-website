@@ -16,12 +16,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        /** Primary action — navy in light, bone in dark, gold glow on hover. */
+        /** Primary action — ink in light, bone in dark, sun glow on hover. */
         primary: 'bg-ink text-bg shadow-lift hover:shadow-glow hover:-translate-y-0.5',
-        /** Quiet secondary — a hairline that fills with the faintest gold wash. */
+        /** Quiet secondary — a hairline that fills with the faintest sun wash. */
         outline:
-          'border border-line bg-transparent text-ink hover:border-gold/60 hover:bg-gold/[0.06] hover:-translate-y-0.5',
-        gold: 'bg-gold text-navy shadow-lift hover:shadow-glow hover:-translate-y-0.5',
+          'border border-line bg-transparent text-ink hover:border-accent/60 hover:bg-accent/[0.06] hover:-translate-y-0.5',
+        accent: 'bg-accent text-navy shadow-lift hover:shadow-glow hover:-translate-y-0.5',
         ghost: 'text-ink hover:bg-ink/[0.05]',
       },
       size: {
@@ -60,7 +60,7 @@ function Sheen() {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, sheen, children, ...props }, ref) => {
     // Solid variants only — a light sweep across a transparent button reads as a glitch.
-    const showSheen = sheen ?? (variant === undefined || variant === 'primary' || variant === 'gold');
+    const showSheen = sheen ?? (variant === undefined || variant === 'primary' || variant === 'accent');
     const classes = cn(buttonVariants({ variant, size }), className);
 
     const decorate = (inner: ReactNode) => (

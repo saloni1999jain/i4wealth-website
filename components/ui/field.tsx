@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
  *
  * The label rides on the `:placeholder-shown` state rather than JavaScript, so
  * it behaves correctly with autofill, back-navigation restore, and before
- * hydration. A gold rule under the field draws itself in on focus.
+ * hydration. An accent rule under the field draws itself in on focus.
  */
 
 type FieldShellProps = {
@@ -47,19 +47,19 @@ function FieldShell({ id, label, error, className, children, alwaysRaised }: Fie
                 'peer-placeholder-shown:top-7 peer-placeholder-shown:text-base peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal',
                 'peer-focus:top-0 peer-focus:text-[0.6875rem] peer-focus:uppercase peer-focus:tracking-[0.18em]',
               ],
-          'peer-focus:text-gold',
+          'peer-focus:text-accent',
           error && 'text-red-500 peer-focus:text-red-500',
         )}
       >
         {label}
       </label>
 
-      {/* Static hairline plus a gold rule that scales in from the left on focus. */}
+      {/* Static hairline plus an accent rule that scales in from the left on focus. */}
       <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-line" />
       <span
         aria-hidden
         className={cn(
-          'absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gold',
+          'absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-accent',
           'transition-transform duration-500 ease-premium',
           'peer-focus:scale-x-100',
           error && 'scale-x-100 bg-red-500',
@@ -83,7 +83,7 @@ function FieldShell({ id, label, error, className, children, alwaysRaised }: Fie
 const inputBase = cn(
   'peer w-full appearance-none border-0 bg-transparent pb-3 pt-1',
   'text-[1.0625rem] text-ink placeholder:text-transparent',
-  // The animated gold rule and the label colour shift are the focus indicator,
+  // The animated accent rule and the label colour shift are the focus indicator,
   // so the global focus ring would only add noise here.
   'outline-none focus:ring-0 focus-visible:outline-none',
 );
@@ -175,7 +175,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
         </select>
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-4 right-0 h-2 w-2 rotate-45 border-b border-r border-muted transition-colors duration-300 group-focus-within:border-gold"
+          className="pointer-events-none absolute bottom-4 right-0 h-2 w-2 rotate-45 border-b border-r border-muted transition-colors duration-300 group-focus-within:border-accent"
         />
       </FieldShell>
     );

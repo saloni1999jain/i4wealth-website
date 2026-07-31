@@ -7,7 +7,7 @@
 
 export const site = {
   name: 'I4Wealth',
-  tagline: 'Building wealth. Not chasing markets.',
+  tagline: 'Markets fluctuate. Wealth compounds.',
   description:
     'I4Wealth is a boutique wealth management firm practising long-term equity investing in Indian businesses — built on patience, discipline, research and ownership.',
   /** Drives canonical links, the sitemap and social cards. Set per deployment. */
@@ -34,9 +34,9 @@ export const nav = [
 
 export const hero = {
   eyebrow: 'Long-term equity investing · India',
-  headline: ['Building Wealth.', 'Not Chasing Markets.'],
-  /** Rendered in the display serif inside the headline. */
-  accentWord: 'Wealth',
+  headline: ['Markets fluctuate.', 'Wealth compounds.'],
+  /** Rendered in the display serif inside whichever headline line contains it. */
+  accentWord: 'compounds',
   subheadline:
     'Long-term equity investing designed to create enduring wealth through patience, discipline and research.',
   primaryCta: { label: 'Start Your Investment Journey', href: '#contact' },

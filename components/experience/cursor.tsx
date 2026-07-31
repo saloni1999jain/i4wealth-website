@@ -9,7 +9,7 @@ const RING = 40;
 const DOT = 6;
 
 /**
- * Custom cursor: a precise gold dot with a ring trailing behind it on a spring,
+ * Custom cursor: a precise accent dot with a ring trailing behind it on a spring,
  * plus two softer echoes for a hint of physics.
  *
  * Only rendered on large, precise-pointer screens with motion allowed. The
@@ -97,7 +97,7 @@ export function Cursor() {
           {echoes.map((echo, index) => (
             <motion.span
               key={index}
-              className="absolute left-0 top-0 rounded-full border border-gold"
+              className="absolute left-0 top-0 rounded-full border border-accent"
               style={{
                 x: echo.x,
                 y: echo.y,
@@ -111,7 +111,7 @@ export function Cursor() {
           ))}
 
           <motion.span
-            className="absolute left-0 top-0 rounded-full border border-gold/70"
+            className="absolute left-0 top-0 rounded-full border border-accent/70"
             style={{
               x: ringX,
               y: ringY,
@@ -125,7 +125,7 @@ export function Cursor() {
           />
 
           <motion.span
-            className="absolute left-0 top-0 rounded-full bg-gold"
+            className="absolute left-0 top-0 rounded-full bg-accent"
             style={{ x, y, width: DOT, height: DOT, marginLeft: -DOT / 2, marginTop: -DOT / 2 }}
             animate={{ scale: interactive ? 0 : 1 }}
             transition={{ type: 'spring', stiffness: 400, damping: 26 }}

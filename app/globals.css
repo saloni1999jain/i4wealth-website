@@ -3,40 +3,73 @@
 @tailwind utilities;
 
 @layer base {
+  /*
+   * Two skies.
+   *
+   * Light is a sunrise: cool blue overhead, warm orange low on the horizon.
+   * Dark is a sunset: deep indigo overhead, pink at the horizon. The two share
+   * one token set, so nothing in the markup needs a `dark:` variant — `--sky`
+   * and `--sun` carry the atmosphere and `--accent` is the sun itself.
+   */
   :root {
     color-scheme: light;
 
-    --bg: 248 248 245;
+    --bg: 244 247 252;
     --surface: 255 255 255;
     --surface-raised: 255 255 255;
-    --ink: 7 27 53;
-    --ink-soft: 39 58 84;
-    --muted: 106 119 136;
-    --line: 223 223 214;
-    --accent: 168 132 62;
+    --ink: 13 32 58;
+    --ink-soft: 40 62 92;
+    --muted: 92 112 139;
+    --line: 220 229 241;
 
-    /* Ambient light used by the mesh gradients and cursor halo. */
-    --halo: 200 164 90;
-    --halo-strength: 0.1;
-    --grid: 7 27 53;
+    /*
+     * Burnt orange. Deliberately deeper than the glow colour in `--sun`: the
+     * accent carries small text (section indices, stage summaries, FAQ
+     * numbers), and a brighter orange measured 4.15:1 against the page — under
+     * the 4.5:1 needed at that size. This is 5.04:1. The luminous version of
+     * the same hue lives in `--sun` and `--accent-soft`, which only ever glow.
+     */
+    --accent: 178 74 20;
+    --accent-soft: 246 172 112;
+    --accent-deep: 156 62 18;
+
+    --sky: 142 184 228;
+    --sky-strength: 0.4;
+    --sun: 255 150 74;
+    --sun-strength: 0.3;
+
+    /* Ambient halo that follows the cursor. */
+    --halo: 255 150 74;
+    --halo-strength: 0.12;
+
+    --grid: 13 32 58;
     --grid-strength: 0.05;
   }
 
   .dark {
     color-scheme: dark;
 
-    --bg: 4 14 28;
-    --surface: 8 24 45;
-    --surface-raised: 11 31 56;
-    --ink: 235 240 247;
-    --ink-soft: 203 214 228;
-    --muted: 137 152 172;
-    --line: 27 45 70;
-    --accent: 209 176 108;
+    --bg: 11 15 42;
+    --surface: 19 25 58;
+    --surface-raised: 26 33 72;
+    --ink: 234 238 250;
+    --ink-soft: 206 214 236;
+    --muted: 150 159 193;
+    --line: 40 50 94;
 
-    --halo: 200 164 90;
-    --halo-strength: 0.16;
-    --grid: 226 236 250;
+    --accent: 242 152 188;
+    --accent-soft: 251 199 219;
+    --accent-deep: 203 99 145;
+
+    --sky: 58 70 148;
+    --sky-strength: 0.55;
+    --sun: 236 108 160;
+    --sun-strength: 0.26;
+
+    --halo: 236 108 160;
+    --halo-strength: 0.2;
+
+    --grid: 226 232 250;
     --grid-strength: 0.045;
   }
 
@@ -46,18 +79,15 @@
 
   html {
     -webkit-tap-highlight-color: transparent;
+
     /* The scroll container must not be `static`, or scroll-linked sections
        cannot be measured against it reliably. A no-op for layout: fixed
        descendants still resolve against the viewport. */
     position: relative;
-  }
 
-  /*
-   * Native smooth scrolling only. A scroll-hijacking library was tried here and
-   * removed: it decouples the page from wheel and trackpad input, which reads
-   * as lag no matter how the easing is tuned.
-   */
-  html {
+    /* Native smooth scrolling only. A scroll-hijacking library was tried here
+       and removed: it decouples the page from wheel and trackpad input, which
+       reads as lag no matter how the easing is tuned. */
     scroll-behavior: smooth;
   }
 
@@ -69,7 +99,7 @@
   }
 
   ::selection {
-    background-color: rgb(200 164 90 / 0.28);
+    background-color: rgb(var(--accent) / 0.24);
     color: rgb(var(--ink));
   }
 
@@ -128,8 +158,25 @@
     mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
   }
 
-  .text-gradient-gold {
-    @apply bg-gradient-to-br from-gold-soft via-gold to-gold-deep bg-clip-text text-transparent;
+  .text-gradient-accent {
+    @apply bg-gradient-to-br from-accent-soft via-accent to-accent-deep bg-clip-text text-transparent;
+  }
+
+  /*
+   * The sky.
+   *
+   * A single fixed layer behind the whole page: cool light overhead from
+   * `--sky`, a broad warm glow rising off the bottom edge from `--sun`. Light
+   * reads as a sunrise, dark as a sunset — same geometry, different colours.
+   *
+   * Fixed and un-animated on purpose, so it composites once and costs nothing
+   * while scrolling. Sections that set their own background simply cover it.
+   */
+  .sky-field {
+    background:
+      radial-gradient(75rem 40rem at 50% 104%, rgb(var(--sun) / var(--sun-strength)), transparent 68%),
+      radial-gradient(60rem 30rem at 82% -6%, rgb(var(--sky) / calc(var(--sky-strength) * 0.7)), transparent 70%),
+      linear-gradient(to bottom, rgb(var(--sky) / var(--sky-strength)) 0%, transparent 46%);
   }
 
   /*

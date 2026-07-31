@@ -73,7 +73,7 @@ export function ContactForm() {
             className="flex min-h-[26rem] flex-col items-start justify-center"
             role="status"
           >
-            <span className="grid h-14 w-14 place-items-center rounded-full border border-gold/40 text-gold">
+            <span className="grid h-14 w-14 place-items-center rounded-full border border-accent/40 text-accent">
               <Check className="h-6 w-6" strokeWidth={1.5} />
             </span>
             <h3 className="mt-8 text-display-sm font-light tracking-[-0.025em] text-ink">
@@ -86,7 +86,7 @@ export function ContactForm() {
             <button
               type="button"
               onClick={() => setStatus('idle')}
-              className="mt-8 text-[0.875rem] text-ink underline decoration-gold/50 underline-offset-4 transition-colors duration-300 hover:text-gold"
+              className="mt-8 text-[0.875rem] text-ink underline decoration-accent/50 underline-offset-4 transition-colors duration-300 hover:text-accent"
             >
               Send another enquiry
             </button>

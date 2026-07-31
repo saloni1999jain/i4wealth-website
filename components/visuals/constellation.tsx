@@ -52,17 +52,20 @@ export function Constellation({ className }: { className?: string }) {
     const ctx = context;
 
     /*
-     * Gold sits far closer to off-white than it does to navy, so the same
-     * colour that glows on the dark theme all but vanishes on the light one.
-     * The light theme therefore gets the deeper gold and stronger alphas.
+     * The field is drawn in the theme's accent — sunrise orange or sunset pink
+     * — read straight off `--accent` so it can never drift from the palette.
+     *
+     * Light needs the stronger alphas: a warm hue on a pale sky is far lower
+     * contrast than the same hue on a deep one.
      */
-    let ink = '200, 164, 90';
+    let ink = '194, 88, 30';
     let intensity = 1;
 
     function readTheme() {
-      const dark = document.documentElement.classList.contains('dark');
-      ink = dark ? '200, 164, 90' : '150, 114, 44';
-      intensity = dark ? 1 : 1.75;
+      const raw = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      // The custom property is space-separated ("194 88 30"); `rgba()` wants commas.
+      if (raw) ink = raw.replace(/\s+/g, ', ');
+      intensity = document.documentElement.classList.contains('dark') ? 1.05 : 1.5;
     }
 
     let width = 0;

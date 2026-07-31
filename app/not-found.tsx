@@ -16,7 +16,7 @@ export default function NotFound() {
       <div className="container relative">
         <p className="eyebrow">Error 404</p>
         <h1 className="mt-6 max-w-[16ch] text-display-lg font-extralight text-ink">
-          This page has gone <span className="font-display italic text-gradient-gold">quiet</span>.
+          This page has gone <span className="font-display italic text-gradient-accent">quiet</span>.
         </h1>
         <p className="mt-7 max-w-measure-lg text-lede font-light text-muted">
           Not everything that disappears is a loss. The rest of the site is where you left it.

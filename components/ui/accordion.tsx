@@ -28,7 +28,7 @@ const AccordionTrigger = forwardRef<
       ref={ref}
       className={cn(
         'group/trigger flex flex-1 items-start justify-between gap-8 py-7 text-left',
-        'transition-colors duration-500 ease-premium hover:text-gold',
+        'transition-colors duration-500 ease-premium hover:text-accent',
         'data-[state=open]:text-ink',
         className,
       )}
@@ -38,7 +38,7 @@ const AccordionTrigger = forwardRef<
       {/* A plus that becomes a minus — quieter than a rotating chevron. */}
       <span
         aria-hidden
-        className="relative mt-2.5 h-4 w-4 shrink-0 text-gold transition-transform duration-500 ease-premium group-data-[state=open]:rotate-180"
+        className="relative mt-2.5 h-4 w-4 shrink-0 text-accent transition-transform duration-500 ease-premium group-data-[state=open]:rotate-180"
       >
         <span className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-current" />
         <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-current transition-opacity duration-500 ease-premium group-data-[state=open]:opacity-0" />

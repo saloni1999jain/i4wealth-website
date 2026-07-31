@@ -27,14 +27,9 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Fixed brand values — never theme-dependent.
-        navy: '#071B35',
-        bone: '#F8F8F5',
-        gold: {
-          DEFAULT: '#C8A45A',
-          soft: '#DEC391',
-          deep: '#A8843E',
-        },
+        // Fixed values for the always-dark bands — the pre-dawn / after-dusk sky.
+        navy: '#0B1030',
+        bone: '#F4F7FC',
 
         // Semantic, theme-aware tokens.
         bg: token('--bg'),
@@ -44,7 +39,18 @@ const config: Config = {
         'ink-soft': token('--ink-soft'),
         muted: token('--muted'),
         line: token('--line'),
-        accent: token('--accent'),
+
+        /*
+         * The accent is the sun. It is warm orange at sunrise (light theme) and
+         * pink at sunset (dark theme), so it resolves through custom properties
+         * rather than being a fixed brand colour — every `text-accent` and
+         * `border-accent/30` in the markup follows the theme automatically.
+         */
+        accent: {
+          DEFAULT: token('--accent'),
+          soft: token('--accent-soft'),
+          deep: token('--accent-deep'),
+        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
@@ -76,9 +82,9 @@ const config: Config = {
         '3xl': '2rem',
       },
       boxShadow: {
-        lift: '0 1px 2px rgb(7 27 53 / 0.04), 0 18px 40px -24px rgb(7 27 53 / 0.28)',
-        'lift-lg': '0 1px 2px rgb(7 27 53 / 0.05), 0 40px 80px -40px rgb(7 27 53 / 0.38)',
-        glow: '0 0 0 1px rgb(200 164 90 / 0.35), 0 12px 44px -16px rgb(200 164 90 / 0.45)',
+        lift: '0 1px 2px rgb(11 16 48 / 0.04), 0 18px 40px -24px rgb(11 16 48 / 0.24)',
+        'lift-lg': '0 1px 2px rgb(11 16 48 / 0.05), 0 40px 80px -40px rgb(11 16 48 / 0.34)',
+        glow: '0 0 0 1px rgb(var(--accent) / 0.4), 0 12px 44px -16px rgb(var(--accent) / 0.5)',
       },
       transitionTimingFunction: {
         // Single easing vocabulary shared by CSS and Framer Motion.

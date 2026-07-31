@@ -47,13 +47,25 @@ export function Hero() {
         <Constellation className="h-full w-full" />
       </div>
 
-      <FloatingOrb className="left-[-10%] top-[12%] h-[26rem] w-[26rem]" />
-      <FloatingOrb className="bottom-[-8%] right-[-6%] h-[30rem] w-[30rem]" />
+      <FloatingOrb className="left-[-12%] top-[8%] h-[26rem] w-[26rem]" />
+      <FloatingOrb className="bottom-[-14%] right-[-8%] h-[34rem] w-[34rem]" />
 
-      {/* Vignette: keeps the typography legible over the brightest part of the field. */}
+      {/*
+        The sun, low and centred — the horizon this section is named for.
+        It sits above the constellation so the field reads as sky behind it.
+      */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_20%,transparent_25%,rgb(var(--bg)/0.75)_78%,rgb(var(--bg))_100%)]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(60%_100%_at_50%_112%,rgb(var(--sun)/0.42),transparent_70%)]"
+      />
+
+      {/*
+        Vignette. Stops well short of opaque: sealing the edges with the page
+        colour would hide the horizon glow the section is built around.
+      */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_18%,transparent_30%,rgb(var(--bg)/0.55)_80%,rgb(var(--bg)/0.72)_100%)]"
       />
 
       {/* — Content — */}
@@ -61,15 +73,17 @@ export function Hero() {
         <div className="max-w-5xl">
           <motion.div {...enter(0.1)} className="mb-9 flex items-center gap-3">
             <span aria-hidden className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60 motion-reduce:hidden" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
             </span>
             <span className="eyebrow">{hero.eyebrow}</span>
           </motion.div>
 
           <h1 className="text-display-xl font-extralight text-ink">
+            {/* The accent word is passed to both lines; `HeroLine` only styles
+                it on the line that actually contains it. */}
             <HeroLine text={hero.headline[0]} show={show} delay={0.25} accent={hero.accentWord} />
-            <HeroLine text={hero.headline[1]} show={show} delay={0.42} />
+            <HeroLine text={hero.headline[1]} show={show} delay={0.42} accent={hero.accentWord} />
           </h1>
 
           <motion.p
@@ -154,7 +168,7 @@ function HeroLine({
         {accent && parts.length > 1 ? (
           <>
             {parts[0]}
-            <span className="font-display italic text-gradient-gold">{accent}</span>
+            <span className="font-display italic text-gradient-accent">{accent}</span>
             {parts[1]}
           </>
         ) : (
@@ -176,7 +190,7 @@ function ScrollCue({ show }: { show: boolean }) {
     <motion.a
       href="#philosophy"
       aria-label="Scroll to our philosophy"
-      className="absolute bottom-12 right-8 z-10 hidden flex-col items-center gap-4 text-muted transition-colors duration-500 hover:text-gold xl:flex"
+      className="absolute bottom-12 right-8 z-10 hidden flex-col items-center gap-4 text-muted transition-colors duration-500 hover:text-accent xl:flex"
       initial={{ opacity: 0 }}
       animate={{ opacity: show ? 1 : 0 }}
       transition={{ duration: 0.8, ease: EASE, delay: 1.5 }}

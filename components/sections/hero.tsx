@@ -41,7 +41,7 @@ export function Hero() {
       {/* — Background stack — */}
       <AmbientGradient />
 
-      <div aria-hidden className="grid-field absolute inset-0 opacity-70 mask-fade-y" />
+      <div aria-hidden className="grid-field absolute inset-0 opacity-40 mask-fade-y" />
 
       <div aria-hidden className="absolute inset-0">
         <Constellation className="h-full w-full" />
@@ -51,21 +51,14 @@ export function Hero() {
       <FloatingOrb className="bottom-[-14%] right-[-8%] h-[34rem] w-[34rem]" />
 
       {/*
-        The sun, low and centred — the horizon this section is named for.
-        It sits above the constellation so the field reads as sky behind it.
+        Not a vignette but a directional wash — heavy on the left where the type
+        sits, clearing to open sky on the right, which the content column never
+        reaches. A centred vignette fogged the whole sky to protect one corner
+        of it; this keeps the weather visible where there is nothing to read.
       */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(60%_100%_at_50%_112%,rgb(var(--sun)/0.42),transparent_70%)]"
-      />
-
-      {/*
-        Vignette. Stops well short of opaque: sealing the edges with the page
-        colour would hide the horizon glow the section is built around.
-      */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_18%,transparent_30%,rgb(var(--bg)/0.55)_80%,rgb(var(--bg)/0.72)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(100deg,rgb(var(--bg)/0.92)_0%,rgb(var(--bg)/0.82)_30%,rgb(var(--bg)/0.42)_56%,rgb(var(--bg)/0.08)_78%,transparent_100%)]"
       />
 
       {/* — Content — */}

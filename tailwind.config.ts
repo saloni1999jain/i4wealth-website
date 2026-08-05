@@ -82,8 +82,24 @@ const config: Config = {
         '3xl': '2rem',
       },
       boxShadow: {
-        lift: '0 1px 2px rgb(11 16 48 / 0.04), 0 18px 40px -24px rgb(11 16 48 / 0.24)',
-        'lift-lg': '0 1px 2px rgb(11 16 48 / 0.05), 0 40px 80px -40px rgb(11 16 48 / 0.34)',
+        /*
+         * Elevation is stacked rather than single-blur: a tight contact shadow,
+         * a mid-range one, and a wide ambient one. That is what separates a
+         * surface that looks lifted off the page from one with a grey smudge
+         * under it.
+         */
+        lift: [
+          '0 1px 1px rgb(var(--shadow) / 0.04)',
+          '0 3px 6px -2px rgb(var(--shadow) / 0.06)',
+          '0 12px 24px -10px rgb(var(--shadow) / 0.12)',
+          '0 32px 56px -28px rgb(var(--shadow) / 0.22)',
+        ].join(', '),
+        'lift-lg': [
+          '0 1px 1px rgb(var(--shadow) / 0.05)',
+          '0 6px 12px -3px rgb(var(--shadow) / 0.08)',
+          '0 24px 44px -16px rgb(var(--shadow) / 0.16)',
+          '0 60px 96px -44px rgb(var(--shadow) / 0.3)',
+        ].join(', '),
         glow: '0 0 0 1px rgb(var(--accent) / 0.4), 0 12px 44px -16px rgb(var(--accent) / 0.5)',
       },
       transitionTimingFunction: {

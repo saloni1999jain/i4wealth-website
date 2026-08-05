@@ -67,7 +67,8 @@ export default function OpengraphImage() {
               flexDirection: 'column',
             }}
           >
-
+            <span>Markets fluctuate.</span>
+            <span style={{ color: '#F0A8B8' }}>Wealth compounds.</span>
           </div>
 
           <div style={{ display: 'flex', width: 120, height: 2, background: '#F298BC', marginTop: 44 }} />

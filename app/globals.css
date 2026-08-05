@@ -4,73 +4,98 @@
 
 @layer base {
   /*
-   * Two skies.
+   * Two weathers.
    *
-   * Light is a sunrise: cool blue overhead, warm orange low on the horizon.
-   * Dark is a sunset: deep indigo overhead, pink at the horizon. The two share
-   * one token set, so nothing in the markup needs a `dark:` variant — `--sky`
-   * and `--sun` carry the atmosphere and `--accent` is the sun itself.
+   * Light is a clear sunny day: strong blue overhead, bright warm sunlight low
+   * and to one side, white cumulus. Dark is dusk under cloud: desaturated
+   * slate-blue, a muted rose band where the sun already went, heavy grey cloud.
+   *
+   * Both are built from the same four tokens — `--sky`, `--sun`, `--cloud` and
+   * `--accent` — so nothing in the markup needs a `dark:` variant. Overcast is
+   * expressed as low saturation and low contrast between sky and cloud, which
+   * is what actually makes weather read as grey.
    */
   :root {
     color-scheme: light;
 
-    --bg: 244 247 252;
+    --bg: 247 250 254;
     --surface: 255 255 255;
     --surface-raised: 255 255 255;
-    --ink: 13 32 58;
-    --ink-soft: 40 62 92;
-    --muted: 92 112 139;
-    --line: 220 229 241;
+    --ink: 15 32 55;
+    --ink-soft: 42 62 90;
+    --muted: 88 106 132;
+    --line: 219 229 242;
 
     /*
-     * Burnt orange. Deliberately deeper than the glow colour in `--sun`: the
+     * Burnt orange. Deliberately deeper than the sunlight in `--sun`: the
      * accent carries small text (section indices, stage summaries, FAQ
-     * numbers), and a brighter orange measured 4.15:1 against the page — under
-     * the 4.5:1 needed at that size. This is 5.04:1. The luminous version of
-     * the same hue lives in `--sun` and `--accent-soft`, which only ever glow.
+     * numbers), and a brighter tone measured under the 4.5:1 those sizes need.
+     * This is 5.17:1. The luminous version of the hue lives in `--sun` and
+     * `--accent-soft`, which only ever glow.
      */
     --accent: 178 74 20;
-    --accent-soft: 246 172 112;
-    --accent-deep: 156 62 18;
+    --accent-soft: 247 178 116;
+    --accent-deep: 150 58 14;
 
-    --sky: 142 184 228;
-    --sky-strength: 0.4;
-    --sun: 255 150 74;
-    --sun-strength: 0.3;
+    /* Clear midday blue, strong at the zenith. */
+    --sky: 92 158 230;
+    --sky-strength: 0.92;
 
-    /* Ambient halo that follows the cursor. */
-    --halo: 255 150 74;
-    --halo-strength: 0.12;
+    /* Sunlight: warm and near-white, not the orange of a low sun. */
+    --sun: 255 214 132;
+    --sun-strength: 0.72;
 
-    --grid: 13 32 58;
-    --grid-strength: 0.05;
+    /* Cumulus. Bright and well separated from the sky behind them. */
+    --cloud: 255 255 255;
+    --cloud-strength: 1;
+
+    --halo: 255 216 138;
+    --halo-strength: 0.14;
+
+    --grid: 15 32 55;
+    --grid-strength: 0.045;
+
+    /* Shadows are cast in the sky's blue, not neutral grey — daylight shadows
+       take their colour from what is lighting them. */
+    --shadow: 24 46 82;
   }
 
   .dark {
     color-scheme: dark;
 
-    --bg: 11 15 42;
-    --surface: 19 25 58;
-    --surface-raised: 26 33 72;
-    --ink: 234 238 250;
-    --ink-soft: 206 214 236;
-    --muted: 150 159 193;
-    --line: 40 50 94;
+    --bg: 22 26 38;
+    --surface: 30 35 50;
+    --surface-raised: 38 44 62;
+    --ink: 231 235 243;
+    --ink-soft: 203 210 224;
+    --muted: 152 162 182;
+    --line: 51 59 79;
 
-    --accent: 242 152 188;
-    --accent-soft: 251 199 219;
-    --accent-deep: 203 99 145;
+    --accent: 236 166 182;
+    --accent-soft: 246 208 216;
+    --accent-deep: 198 128 146;
 
-    --sky: 58 70 148;
-    --sky-strength: 0.55;
-    --sun: 236 108 160;
-    --sun-strength: 0.26;
+    /* Overcast: barely blue, and close in value to the cloud above it. */
+    --sky: 72 84 108;
+    --sky-strength: 0.85;
 
-    --halo: 236 108 160;
-    --halo-strength: 0.2;
+    /* The last of the light, low and largely smothered. */
+    --sun: 206 138 154;
+    --sun-strength: 0.34;
 
-    --grid: 226 232 250;
-    --grid-strength: 0.045;
+    /* Heavy cloud, only just lighter than the sky it sits against. */
+    --cloud: 138 149 172;
+    --cloud-strength: 0.5;
+
+    --halo: 198 132 148;
+    --halo-strength: 0.16;
+
+    --grid: 226 232 246;
+    --grid-strength: 0.04;
+
+    /* Under cloud there is no strong key light, so shadows go near-black and
+       tighten rather than spreading. */
+    --shadow: 0 2 10;
   }
 
   * {
@@ -136,8 +161,33 @@
     @apply h-px w-full origin-left bg-gradient-to-r from-line via-line to-transparent;
   }
 
+  /*
+   * A raised slab. The inset highlight along the top edge is the tell: real
+   * surfaces catch light where they turn away from the viewer, and without it
+   * a bordered rectangle stays flat no matter how much shadow sits under it.
+   */
+  /*
+   * The tell that makes a surface read as a solid slab rather than a bordered
+   * rectangle: real surfaces catch light along the edge that turns toward it,
+   * and fall off along the one that turns away.
+   *
+   * Kept separate from `.surface-card` because `overflow: hidden` flattens a
+   * 3D context — anything that tilts needs the lit edge without the clipping.
+   */
+  .lit-edge {
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.6),
+      inset 0 -1px 0 0 rgb(var(--shadow) / 0.04);
+  }
+
+  .dark .lit-edge {
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.06),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.2);
+  }
+
   .surface-card {
-    @apply relative overflow-hidden rounded-2xl border border-line bg-surface;
+    @apply lit-edge relative overflow-hidden rounded-2xl border border-line bg-surface;
   }
 
   /* Faint architectural grid used behind several sections. */
@@ -165,18 +215,52 @@
   /*
    * The sky.
    *
-   * A single fixed layer behind the whole page: cool light overhead from
-   * `--sky`, a broad warm glow rising off the bottom edge from `--sun`. Light
-   * reads as a sunrise, dark as a sunset — same geometry, different colours.
+   * Three fixed layers behind the whole page, at different depths so the
+   * weather has somewhere to sit:
    *
-   * Fixed and un-animated on purpose, so it composites once and costs nothing
-   * while scrolling. Sections that set their own background simply cover it.
+   *   .sky-field    the gradient — blue overhead, light at the horizon
+   *   .sun-field    the sun, and the wash it throws across everything
+   *   .cloud-field  cumulus, built from soft radial blobs
+   *
+   * All three are `position: fixed` and un-animated, so they composite once and
+   * cost nothing while scrolling. Sections that set their own background simply
+   * cover them.
    */
   .sky-field {
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--sky) / var(--sky-strength)) 0%,
+      rgb(var(--sky) / calc(var(--sky-strength) * 0.72)) 26%,
+      rgb(var(--sky) / calc(var(--sky-strength) * 0.3)) 52%,
+      transparent 78%
+    );
+  }
+
+  .sun-field {
     background:
-      radial-gradient(75rem 40rem at 50% 104%, rgb(var(--sun) / var(--sun-strength)), transparent 68%),
-      radial-gradient(60rem 30rem at 82% -6%, rgb(var(--sky) / calc(var(--sky-strength) * 0.7)), transparent 70%),
-      linear-gradient(to bottom, rgb(var(--sky) / var(--sky-strength)) 0%, transparent 46%);
+      radial-gradient(22rem 22rem at 78% 12%, rgb(var(--sun) / var(--sun-strength)), transparent 62%),
+      radial-gradient(
+        70rem 46rem at 78% 12%,
+        rgb(var(--sun) / calc(var(--sun-strength) * 0.42)),
+        transparent 72%
+      );
+  }
+
+  /*
+   * Cloud. Each blob is one radial gradient; overlapping them at different
+   * sizes gives the lumpy edge a single ellipse never has. Percentages keep
+   * them proportional to the viewport instead of drifting off at wide sizes.
+   */
+  .cloud-field {
+    background:
+      radial-gradient(26rem 9rem at 20% 14%, rgb(var(--cloud) / var(--cloud-strength)), transparent 66%),
+      radial-gradient(16rem 8rem at 30% 10%, rgb(var(--cloud) / var(--cloud-strength)), transparent 64%),
+      radial-gradient(19rem 7rem at 10% 19%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.85)), transparent 68%),
+      radial-gradient(30rem 10rem at 92% 30%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.7)), transparent 68%),
+      radial-gradient(20rem 8rem at 80% 26%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.6)), transparent 66%),
+      radial-gradient(34rem 11rem at 58% 52%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.42)), transparent 72%),
+      radial-gradient(24rem 9rem at 34% 62%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.3)), transparent 72%);
+    filter: blur(10px);
   }
 
   /*

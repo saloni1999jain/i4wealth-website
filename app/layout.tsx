@@ -128,11 +128,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
 
         {/*
-          The sky. Fixed and un-animated, so it composites once and costs
-          nothing while scrolling. Negative z-index puts it above the body's
-          background colour but behind all content.
+          The weather, in three fixed layers: gradient, sun, cloud. All are
+          un-animated, so they composite once and cost nothing while scrolling.
+          Negative z-index puts them above the body's background colour but
+          behind every piece of content.
         */}
-        <div aria-hidden className="sky-field pointer-events-none fixed inset-0 -z-10" />
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+          <div className="sky-field absolute inset-0" />
+          <div className="cloud-field absolute inset-0" />
+          <div className="sun-field absolute inset-0" />
+        </div>
 
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LoadingProvider>

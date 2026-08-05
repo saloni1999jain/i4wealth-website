@@ -16,6 +16,11 @@ type Node = {
   vx: number;
   vy: number;
   radius: number;
+  /**
+   * Depth, 0 (far) → 1 (near). Drives size, brightness and how far the node
+   * shifts as the pointer moves, which is what produces the parallax.
+   */
+  z: number;
   /** Per-node phase so the twinkle never looks synchronised. */
   phase: number;
   /** Eased 0–1 proximity to the cursor. */
@@ -24,6 +29,10 @@ type Node = {
 
 const LINK_DISTANCE = 0.14; // normalised, relative to the diagonal
 const POINTER_RADIUS = 0.18;
+/** Differential pointer travel between the nearest and furthest nodes. */
+const PARALLAX = 0.05;
+/** Nodes further apart in depth than this never link. */
+const LINK_DEPTH = 0.42;
 
 /**
  * The hero's generative visual: a constellation whose density follows a
@@ -34,6 +43,11 @@ const POINTER_RADIUS = 0.18;
  * structure rather than drawn as a chart. Lines appear between nearby nodes and
  * toward the cursor, which is what makes it feel like a network of businesses
  * rather than decoration.
+ *
+ * The field has real depth: each node carries a `z`, and near nodes are larger,
+ * brighter, and shift further as the pointer moves. Links only form between
+ * nodes at similar depths, so the lines describe planes rather than smearing
+ * front to back.
  *
  * Everything is canvas 2D: no WebGL, no Three.js, no shader compilation on the
  * critical path.
@@ -111,6 +125,7 @@ export function Constellation({ className }: { className?: string }) {
           vx: (Math.random() - 0.5) * 0.00016,
           vy: (Math.random() - 0.5) * 0.00016,
           radius: 0.6 + Math.random() * 1.5,
+          z: Math.random(),
           phase: Math.random() * Math.PI * 2,
           glow: 0,
         };
@@ -159,8 +174,15 @@ export function Constellation({ className }: { className?: string }) {
           if (Math.abs(node.oy) > 0.05) node.vy *= -1;
         }
 
-        const x = (node.bx + node.ox) * width;
-        const y = (node.by + node.oy) * height;
+        /*
+         * Parallax: the pointer's offset from centre shifts near nodes further
+         * than far ones. This is the whole depth effect — a few pixels of
+         * differential movement reads as distance far more convincingly than
+         * size alone.
+         */
+        const depthShift = (node.z - 0.5) * PARALLAX * pointer.active;
+        const x = (node.bx + node.ox) * width + (pointer.x - 0.5) * depthShift * width;
+        const y = (node.by + node.oy) * height + (pointer.y - 0.5) * depthShift * height;
 
         const distance = Math.hypot(x - px, y - py);
         const target = pointer.active * clamp(1 - distance / pointerPx, 0, 1);
@@ -169,18 +191,27 @@ export function Constellation({ className }: { className?: string }) {
         return { x, y, node };
       });
 
+      // Painter's algorithm — far nodes drawn first, so near ones overlap them.
+      screen.sort((a, b) => a.node.z - b.node.z);
+
       // Links first, so nodes always sit on top of their own connections.
       ctx.lineWidth = 1;
       for (let i = 0; i < screen.length; i += 1) {
         for (let j = i + 1; j < screen.length; j += 1) {
           const a = screen[i];
           const b = screen[j];
+          // Cheap depth reject before the more expensive distance work.
+          const depthGap = Math.abs(a.node.z - b.node.z);
+          if (depthGap > LINK_DEPTH) continue;
+
           const distance = Math.hypot(a.x - b.x, a.y - b.y);
           if (distance > linkPx) continue;
 
           const falloff = 1 - distance / linkPx;
           const boost = Math.max(a.node.glow, b.node.glow);
-          const alpha = falloff * falloff * (0.13 + boost * 0.5) * intensity;
+          // Near links are drawn more strongly, so the planes separate.
+          const depth = 0.55 + ((a.node.z + b.node.z) / 2) * 0.75;
+          const alpha = falloff * falloff * (0.13 + boost * 0.5) * intensity * depth;
 
           ctx.strokeStyle = `rgba(${ink}, ${alpha.toFixed(3)})`;
           ctx.beginPath();
@@ -204,8 +235,9 @@ export function Constellation({ className }: { className?: string }) {
 
       for (const { x, y, node } of screen) {
         const twinkle = reduced ? 1 : 0.72 + Math.sin(time * 0.0009 + node.phase) * 0.28;
-        const radius = node.radius * (1 + node.glow * 1.5);
-        const alpha = clamp((0.3 + node.glow * 0.7) * twinkle * intensity, 0, 1);
+        // Near nodes are drawn larger and brighter; far ones recede.
+        const radius = node.radius * (0.55 + node.z * 0.9) * (1 + node.glow * 1.5);
+        const alpha = clamp((0.3 + node.glow * 0.7) * twinkle * intensity * (0.45 + node.z * 0.7), 0, 1);
 
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);

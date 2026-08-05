@@ -4,98 +4,106 @@
 
 @layer base {
   /*
-   * Two weathers.
+   * Two skies, an hour apart at either end of the day.
    *
-   * Light is a clear sunny day: strong blue overhead, bright warm sunlight low
-   * and to one side, white cumulus. Dark is dusk under cloud: desaturated
-   * slate-blue, a muted rose band where the sun already went, heavy grey cloud.
+   * Light is sunrise: violet still overhead, warming down through gold to a
+   * bright band at the horizon, with the sun's disc sitting on it. Dark is deep
+   * night: a near-black sky, a star field, the Milky Way, and a moon.
    *
-   * Both are built from the same four tokens — `--sky`, `--sun`, `--cloud` and
-   * `--accent` — so nothing in the markup needs a `dark:` variant. Overcast is
-   * expressed as low saturation and low contrast between sky and cloud, which
-   * is what actually makes weather read as grey.
+   * The tokens describe the *sky*, not the widgets — `--zenith`, `--horizon`,
+   * `--sun`, `--star` — and every surface colour is derived to sit against
+   * them, so nothing in the markup needs a `dark:` variant.
    */
   :root {
     color-scheme: light;
 
-    --bg: 247 250 254;
-    --surface: 255 255 255;
+    --bg: 253 247 242;
+    --surface: 255 253 251;
     --surface-raised: 255 255 255;
-    --ink: 15 32 55;
-    --ink-soft: 42 62 90;
-    --muted: 88 106 132;
-    --line: 219 229 242;
+    --ink: 38 26 46;
+    --ink-soft: 66 50 74;
+    --muted: 112 96 112;
+    --line: 236 223 214;
 
     /*
-     * Burnt orange. Deliberately deeper than the sunlight in `--sun`: the
-     * accent carries small text (section indices, stage summaries, FAQ
-     * numbers), and a brighter tone measured under the 4.5:1 those sizes need.
-     * This is 5.17:1. The luminous version of the hue lives in `--sun` and
-     * `--accent-soft`, which only ever glow.
+     * Burnt orange. Deliberately deeper than the sun in `--sun`: the accent
+     * carries small text (section indices, stage summaries, FAQ numbers) and a
+     * brighter tone falls under the 4.5:1 those sizes need. This is 5.09:1.
      */
     --accent: 178 74 20;
     --accent-soft: 247 178 116;
     --accent-deep: 150 58 14;
 
-    /* Clear midday blue, strong at the zenith. */
-    --sky: 92 158 230;
-    --sky-strength: 0.92;
+    /* Night still holding on at the top of the sky. */
+    --zenith: 122 138 196;
+    --zenith-strength: 0.5;
 
-    /* Sunlight: warm and near-white, not the orange of a low sun. */
-    --sun: 255 214 132;
-    --sun-strength: 0.72;
+    /* The band just above the horizon, where the light is warmest. */
+    --horizon: 255 196 128;
+    --horizon-strength: 0.85;
 
-    /* Cumulus. Bright and well separated from the sky behind them. */
-    --cloud: 255 255 255;
-    --cloud-strength: 1;
+    /* The disc itself. */
+    --sun: 255 150 62;
+    --sun-strength: 0.95;
 
-    --halo: 255 216 138;
-    --halo-strength: 0.14;
+    /* Cloud lit from beneath, as it is at dawn. */
+    --cloud: 255 206 178;
+    --cloud-strength: 0.72;
 
-    --grid: 15 32 55;
-    --grid-strength: 0.045;
+    --star: 255 255 255;
+    --star-strength: 0;
 
-    /* Shadows are cast in the sky's blue, not neutral grey — daylight shadows
-       take their colour from what is lighting them. */
-    --shadow: 24 46 82;
+    --halo: 255 150 62;
+    --halo-strength: 0.13;
+
+    --grid: 38 26 46;
+    --grid-strength: 0.04;
+
+    /* Daylight shadows take their colour from the sky lighting them. */
+    --shadow: 78 44 26;
   }
 
   .dark {
     color-scheme: dark;
 
-    --bg: 22 26 38;
-    --surface: 30 35 50;
-    --surface-raised: 38 44 62;
-    --ink: 231 235 243;
-    --ink-soft: 203 210 224;
-    --muted: 152 162 182;
-    --line: 51 59 79;
+    --bg: 7 10 24;
+    --surface: 15 19 38;
+    --surface-raised: 21 26 48;
+    --ink: 233 237 248;
+    --ink-soft: 205 212 230;
+    --muted: 150 158 184;
+    --line: 35 42 68;
 
-    --accent: 236 166 182;
-    --accent-soft: 246 208 216;
-    --accent-deep: 198 128 146;
+    /* Starlight — the same warmth as the sun, seen from much further away. */
+    --accent: 240 202 150;
+    --accent-soft: 250 230 200;
+    --accent-deep: 206 166 112;
 
-    /* Overcast: barely blue, and close in value to the cloud above it. */
-    --sky: 72 84 108;
-    --sky-strength: 0.85;
+    --zenith: 10 14 34;
+    --zenith-strength: 1;
 
-    /* The last of the light, low and largely smothered. */
-    --sun: 206 138 154;
-    --sun-strength: 0.34;
+    /* The faint airglow that keeps a night sky from being pure black. */
+    --horizon: 44 58 104;
+    --horizon-strength: 0.5;
 
-    /* Heavy cloud, only just lighter than the sky it sits against. */
-    --cloud: 138 149 172;
+    /* The moon stands in for the sun. */
+    --sun: 226 232 246;
+    --sun-strength: 0.9;
+
+    --cloud: 30 40 74;
     --cloud-strength: 0.5;
 
-    --halo: 198 132 148;
-    --halo-strength: 0.16;
+    --star: 255 252 244;
+    --star-strength: 1;
+
+    --halo: 240 202 150;
+    --halo-strength: 0.1;
 
     --grid: 226 232 246;
-    --grid-strength: 0.04;
+    --grid-strength: 0.035;
 
-    /* Under cloud there is no strong key light, so shadows go near-black and
-       tighten rather than spreading. */
-    --shadow: 0 2 10;
+    /* No key light at night: shadows go black and tighten. */
+    --shadow: 0 0 6;
   }
 
   * {
@@ -213,54 +221,144 @@
   }
 
   /*
-   * The sky.
+   * The sky, in fixed layers behind the whole page.
    *
-   * Three fixed layers behind the whole page, at different depths so the
-   * weather has somewhere to sit:
-   *
-   *   .sky-field    the gradient — blue overhead, light at the horizon
-   *   .sun-field    the sun, and the wash it throws across everything
-   *   .cloud-field  cumulus, built from soft radial blobs
-   *
-   * All three are `position: fixed` and un-animated, so they composite once and
-   * cost nothing while scrolling. Sections that set their own background simply
-   * cover them.
+   * All of them are `position: fixed` and driven by tokens, so the same three
+   * elements read as a sunrise in one theme and a night sky in the other. None
+   * repaint while scrolling.
    */
+
+  /* Zenith → horizon. Violet down to warm gold by day; near-black to a faint
+     airglow at night. */
   .sky-field {
     background: linear-gradient(
       to bottom,
-      rgb(var(--sky) / var(--sky-strength)) 0%,
-      rgb(var(--sky) / calc(var(--sky-strength) * 0.72)) 26%,
-      rgb(var(--sky) / calc(var(--sky-strength) * 0.3)) 52%,
-      transparent 78%
+      rgb(var(--zenith) / var(--zenith-strength)) 0%,
+      rgb(var(--zenith) / calc(var(--zenith-strength) * 0.55)) 22%,
+      rgb(var(--horizon) / calc(var(--horizon-strength) * 0.35)) 52%,
+      rgb(var(--horizon) / calc(var(--horizon-strength) * 0.8)) 78%,
+      rgb(var(--horizon) / var(--horizon-strength)) 100%
     );
   }
 
+  /*
+   * The disc, and the light it throws. Sitting low and just off-centre so it
+   * reads as rising rather than as a decorative blob. The moon uses the same
+   * geometry with a smaller, cooler disc.
+   */
   .sun-field {
     background:
-      radial-gradient(22rem 22rem at 78% 12%, rgb(var(--sun) / var(--sun-strength)), transparent 62%),
+      /* Rays. Barely there, but they are what makes it read as a sun rather
+         than a glow — a light source with direction. */
+      repeating-conic-gradient(
+        from 0deg at 72% 80%,
+        rgb(var(--sun) / 0.035) 0deg 2deg,
+        transparent 2deg 14deg
+      ),
+      /* The disc, with a defined edge. */
       radial-gradient(
-        70rem 46rem at 78% 12%,
-        rgb(var(--sun) / calc(var(--sun-strength) * 0.42)),
-        transparent 72%
-      );
+        7rem 7rem at 72% 80%,
+        rgb(var(--sun) / var(--sun-strength)) 0%,
+        rgb(var(--sun) / var(--sun-strength)) 72%,
+        rgb(var(--sun) / 0.45) 86%,
+        transparent 97%
+      ),
+      /* Corona. */
+      radial-gradient(24rem 24rem at 72% 80%, rgb(var(--sun) / calc(var(--sun-strength) * 0.26)), transparent 68%),
+      /* The light it throws along the horizon. */
+      radial-gradient(96rem 42rem at 72% 96%, rgb(var(--sun) / calc(var(--sun-strength) * 0.2)), transparent 74%);
+  }
+
+  .dark .sun-field {
+    background:
+      /* The moon: a crisp disc, no rays, and a much tighter halo. */
+      radial-gradient(
+        3.6rem 3.6rem at 78% 15%,
+        rgb(var(--sun) / var(--sun-strength)) 0%,
+        rgb(var(--sun) / var(--sun-strength)) 74%,
+        rgb(var(--sun) / 0.3) 88%,
+        transparent 97%
+      ),
+      radial-gradient(11rem 11rem at 78% 15%, rgb(var(--sun) / 0.12), transparent 70%),
+      radial-gradient(40rem 26rem at 78% 12%, rgb(var(--sun) / 0.05), transparent 74%);
   }
 
   /*
-   * Cloud. Each blob is one radial gradient; overlapping them at different
-   * sizes gives the lumpy edge a single ellipse never has. Percentages keep
-   * them proportional to the viewport instead of drifting off at wide sizes.
+   * Cloud, underlit at dawn. At night it thins to a Milky Way band instead —
+   * one long soft diagonal rather than discrete banks.
    */
   .cloud-field {
     background:
-      radial-gradient(26rem 9rem at 20% 14%, rgb(var(--cloud) / var(--cloud-strength)), transparent 66%),
-      radial-gradient(16rem 8rem at 30% 10%, rgb(var(--cloud) / var(--cloud-strength)), transparent 64%),
-      radial-gradient(19rem 7rem at 10% 19%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.85)), transparent 68%),
-      radial-gradient(30rem 10rem at 92% 30%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.7)), transparent 68%),
-      radial-gradient(20rem 8rem at 80% 26%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.6)), transparent 66%),
-      radial-gradient(34rem 11rem at 58% 52%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.42)), transparent 72%),
-      radial-gradient(24rem 9rem at 34% 62%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.3)), transparent 72%);
-    filter: blur(10px);
+      radial-gradient(30rem 6rem at 24% 62%, rgb(var(--cloud) / var(--cloud-strength)), transparent 70%),
+      radial-gradient(18rem 5rem at 34% 58%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.8)), transparent 68%),
+      radial-gradient(38rem 7rem at 78% 70%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.6)), transparent 72%),
+      radial-gradient(24rem 5rem at 60% 48%, rgb(var(--cloud) / calc(var(--cloud-strength) * 0.4)), transparent 70%);
+    filter: blur(12px);
+  }
+
+  .dark .cloud-field {
+    background: linear-gradient(
+      104deg,
+      transparent 22%,
+      rgb(var(--cloud) / calc(var(--cloud-strength) * 0.5)) 38%,
+      rgb(var(--cloud) / var(--cloud-strength)) 50%,
+      rgb(var(--cloud) / calc(var(--cloud-strength) * 0.5)) 62%,
+      transparent 78%
+    );
+    filter: blur(34px);
+  }
+
+  /*
+   * Stars.
+   *
+   * Positions come from `<StarField />`, which paints them as one giant
+   * `box-shadow` on a single 1px element — thousands of points, one node, no
+   * image request. The twinkle animates opacity on the whole layer rather than
+   * per star, so it costs one composited property regardless of count.
+   */
+  .star-layer {
+    opacity: 0;
+    transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dark .star-layer {
+    opacity: var(--star-strength);
+    animation: star-twinkle var(--twinkle-duration, 7s) ease-in-out infinite;
+  }
+
+  @keyframes star-twinkle {
+    0%,
+    100% {
+      opacity: calc(var(--star-strength) * 0.55);
+    }
+    50% {
+      opacity: var(--star-strength);
+    }
+  }
+
+  /* A single meteor, rare enough to be a surprise rather than a feature. */
+  .meteor {
+    opacity: 0;
+  }
+
+  .dark .meteor {
+    animation: meteor-fall 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes meteor-fall {
+    0%,
+    88% {
+      opacity: 0;
+      transform: translate3d(0, 0, 0) rotate(24deg) scaleX(0.2);
+    }
+    90% {
+      opacity: 1;
+    }
+    97%,
+    100% {
+      opacity: 0;
+      transform: translate3d(26rem, 13rem, 0) rotate(24deg) scaleX(1);
+    }
   }
 
   /*

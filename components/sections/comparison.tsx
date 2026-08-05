@@ -31,8 +31,10 @@ export function Comparison() {
       <div className="container">
         <SectionHeader eyebrow={comparison.eyebrow} title={comparison.title} lede={comparison.lede} />
 
+        {/* Perspective on the row, so the two panels recede into the same
+            space rather than each having its own vanishing point. */}
         <div
-          className="mt-16 flex flex-col gap-5 lg:flex-row lg:gap-6"
+          className="mt-16 flex flex-col gap-5 [perspective:1600px] [transform-style:preserve-3d] lg:flex-row lg:gap-6"
           onMouseLeave={() => setFocused(null)}
         >
           <Panel
@@ -84,9 +86,16 @@ function Panel({
     <motion.div
       className={cn(
         'group relative min-w-0 overflow-hidden rounded-2xl border p-8 sm:p-10 lg:basis-0 lg:p-12',
+        'lit-edge transition-shadow duration-500 ease-premium',
+        // The side being read lifts toward the viewer; the other settles back.
         isRight ? 'border-accent/25 bg-navy text-bone' : 'border-line bg-surface',
       )}
-      animate={{ opacity: dimmed ? 0.55 : 1, flexGrow: flex }}
+      animate={{
+        opacity: dimmed ? 0.55 : 1,
+        flexGrow: flex,
+        z: dimmed ? -30 : 0,
+        scale: dimmed ? 0.985 : 1,
+      }}
       transition={{ duration: 0.6, ease: EASE }}
       onMouseEnter={onFocus}
       onFocusCapture={onFocus}

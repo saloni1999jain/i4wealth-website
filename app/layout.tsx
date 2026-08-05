@@ -8,6 +8,7 @@ import { ScrollProgress } from '@/components/experience/scroll-progress';
 import { ThemeProvider } from '@/components/experience/theme-provider';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
+import { StarField } from '@/components/visuals/star-field';
 import { site } from '@/content/site';
 
 import './globals.css';
@@ -73,8 +74,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F4F7FC' },
-    { media: '(prefers-color-scheme: dark)', color: '#0B0F2A' },
+    { media: '(prefers-color-scheme: light)', color: '#FDF7F2' },
+    { media: '(prefers-color-scheme: dark)', color: '#070A18' },
   ],
   width: 'device-width',
   initialScale: 1,
@@ -133,8 +134,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Negative z-index puts them above the body's background colour but
           behind every piece of content.
         */}
-        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           <div className="sky-field absolute inset-0" />
+          <StarField className="absolute inset-0" />
           <div className="cloud-field absolute inset-0" />
           <div className="sun-field absolute inset-0" />
         </div>

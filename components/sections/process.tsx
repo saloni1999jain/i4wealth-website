@@ -34,7 +34,10 @@ export function Process() {
         />
 
         <Reveal delay={0.1} className="mt-16 hidden lg:block">
-          <div className="flex h-[30rem] gap-3" onMouseLeave={() => setActive(0)}>
+          <div
+            className="flex h-[30rem] gap-3 [perspective:1800px] [transform-style:preserve-3d]"
+            onMouseLeave={() => setActive(0)}
+          >
             {investmentProcess.stages.map((stage, index) => (
               <DesktopSlat
                 key={stage.id}
@@ -81,9 +84,11 @@ function DesktopSlat({
       className={cn(
         'group relative min-w-0 basis-0 overflow-hidden rounded-2xl border text-left',
         'transition-colors duration-700 ease-premium',
+        'lit-edge',
         isActive ? 'border-accent/30 bg-navy text-bone' : 'border-line bg-surface hover:border-accent/25',
       )}
-      animate={{ flexGrow: isActive ? 4.6 : 1 }}
+      // The open slat comes forward; the closed ones sit back in the rack.
+      animate={{ flexGrow: isActive ? 4.6 : 1, z: isActive ? 40 : -20 }}
       transition={{ duration: 0.75, ease: EASE }}
     >
       {isActive ? (

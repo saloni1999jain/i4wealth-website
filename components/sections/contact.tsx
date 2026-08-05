@@ -93,6 +93,13 @@ export function Contact() {
           </div>
 
           <Reveal delay={0.1} direction="left">
+            {/*
+              Deliberately not tilted. It was, briefly, at two degrees — and a
+              browser test caught a submit landing on nothing, because the
+              button had moved out from under the cursor between the press and
+              the release. Depth here comes from elevation alone; a control
+              surface must not move while you are aiming at it.
+            */}
             <ContactForm />
           </Reveal>
         </div>

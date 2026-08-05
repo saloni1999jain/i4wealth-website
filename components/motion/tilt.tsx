@@ -18,6 +18,14 @@ type TiltProps = {
 };
 
 /**
+ * Anything you aim at, drag, or type into. While the pointer is over one of
+ * these the surface returns to rest and stops tracking — a target that moves
+ * as you reach for it is worse than no effect at all, and a tilting panel was
+ * measured making a real submit button miss its own click.
+ */
+const CONTROLS = 'a, button, input, select, textarea, [role="slider"], [role="button"]';
+
+/**
  * Gives a surface a physical tilt: it leans toward the cursor as if hinged at
  * its centre, and lifts slightly off the page while hovered.
  *
@@ -55,9 +63,16 @@ export function Tilt({ children, className, max = 6, lift = 6, glare = false }: 
 
   function handleMove(event: React.PointerEvent<HTMLDivElement>) {
     if (!hasPointer || !ref.current) return;
+
+    if ((event.target as HTMLElement | null)?.closest(CONTROLS)) {
+      reset();
+      return;
+    }
+
     const rect = ref.current.getBoundingClientRect();
     px.set((event.clientX - rect.left) / rect.width - 0.5);
     py.set((event.clientY - rect.top) / rect.height - 0.5);
+    hovered.set(1);
   }
 
   function reset() {
@@ -73,7 +88,6 @@ export function Tilt({ children, className, max = 6, lift = 6, glare = false }: 
       <motion.div
         ref={ref}
         onPointerMove={handleMove}
-        onPointerEnter={() => hasPointer && hovered.set(1)}
         onPointerLeave={reset}
         style={hasPointer ? { rotateX, rotateY, translateZ, transformStyle: 'preserve-3d' } : undefined}
         className="relative h-full motion-reduce:!transform-none"
